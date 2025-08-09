@@ -1,8 +1,11 @@
-﻿namespace StockMePhotos.Data.Models.Base
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace StockMePhotos.Data.Models.Base
 {
     public abstract class BaseModel<TKey>
         where TKey : struct
     {
-        protected TKey Id { get; set; }
+        [Comment("Entity ID")]
+        public TKey Id { get; set; }
     }
 }
