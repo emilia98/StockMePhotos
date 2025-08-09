@@ -35,5 +35,28 @@
             /// </summary>
             public const int SlugMaxLength = 30;
         }
+
+        public static class Tag
+        {
+            /// <summary>
+            /// Tag Name should be at least 2 characters long.
+            /// </summary>
+            public const int NameMinLength = 2;
+
+            /// <summary>
+            /// Tag Name should have maximum length of 30 characters.
+            /// </summary>
+            public const int NameMaxLength = 30;
+
+            /// <summary>
+            /// Tag Slug should be at least 2 characters long.
+            /// </summary>
+            public const int SlugMinlength = 2;
+
+            /// <summary>
+            /// Tag Slug should have maximum length of 30 characters.
+            /// </summary>
+            public const int SlugMaxLength = 30;
+        }
     }
 }
