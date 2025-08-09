@@ -30,6 +30,48 @@ namespace StockMePhotos.Data.Configurations
                 .Property(t => t.IsDeleted)
                 .IsRequired()
                 .HasDefaultValue(false);
+
+            entity
+                .HasData(SeedTags());
+        }
+
+        public IEnumerable<Tag> SeedTags()
+        {
+            List<Tag> tagsToSeed = new List<Tag>
+            {
+                new Tag
+                {
+                    Id = 1,
+                    Name = "Cat",
+                    Slug = "cat"
+                },
+                new Tag
+                {
+                    Id = 2,
+                    Name = "Dog",
+                    Slug = "dog"
+                },
+                new Tag
+                {
+                    Id = 3,
+                    Name = "Flower",
+                    Slug = "flower"
+                },
+                new Tag
+                {
+                    Id = 4,
+                    Name = "Sea",
+                    Slug = "sea"
+                },
+                new Tag
+                {
+                    Id = 5,
+                    Name = "Mountain",
+                    Slug = "mountain"
+                }
+            };
+
+            return tagsToSeed;
         }
     }
 }
