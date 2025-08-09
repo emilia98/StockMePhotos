@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using StockMePhotos.Web.Data;
+using StockMePhotos.Data;
 
 namespace StockMePhotos.Web;
 
