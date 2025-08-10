@@ -23,6 +23,7 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddScoped<ICategoryService, CategoryService>();
+        builder.Services.AddScoped<ITagService, TagService>();
 
         var app = builder.Build();
 

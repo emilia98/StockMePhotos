@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using StockMePhotos.Web.Models;
+using StockMePhotos.ViewModels;
 
 namespace StockMePhotos.Web.Controllers;
 
