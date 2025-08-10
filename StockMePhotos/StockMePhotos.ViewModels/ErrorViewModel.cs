@@ -1,4 +1,4 @@
-namespace StockMePhotos.Web.Models
+namespace StockMePhotos.ViewModels
 {
     public class ErrorViewModel
     {
