@@ -33,6 +33,9 @@ namespace StockMePhotos.Data.Configurations
 
             entity
                 .HasData(SeedTags());
+
+            entity
+                .HasQueryFilter(t => t.IsDeleted == false);
         }
 
         public IEnumerable<Tag> SeedTags()

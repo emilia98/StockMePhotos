@@ -39,6 +39,9 @@ namespace StockMePhotos.Data.Configurations
 
             entity
                 .HasData(SeedCategories());
+
+            entity
+                .HasQueryFilter(c => c.IsDeleted == false);
         }
 
         private IEnumerable<Category> SeedCategories()

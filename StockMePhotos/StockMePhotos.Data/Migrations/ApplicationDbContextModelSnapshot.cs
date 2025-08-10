@@ -259,7 +259,7 @@ namespace StockMePhotos.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", t =>
+                    b.ToTable("Categories", null, t =>
                         {
                             t.HasComment("Category table");
                         });
@@ -336,7 +336,7 @@ namespace StockMePhotos.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags", t =>
+                    b.ToTable("Tags", null, t =>
                         {
                             t.HasComment("Tag table");
                         });
