@@ -1,0 +1,15 @@
+﻿@using StockMePhotos.ViewModels.Tag;
+@model IEnumerable<TagListViewModel>
+
+<div class="hero-section">
+    <h1>Tags (@Model.Count())</h1>
+</div>
+
+<div class="listing">
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li>@category.Name</li>
+        }
+    </ul>
+</div>
