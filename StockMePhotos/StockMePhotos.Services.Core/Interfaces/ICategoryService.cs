@@ -7,5 +7,7 @@ namespace StockMePhotos.Services.Core.Interfaces
         Task<IEnumerable<CategoryListViewModel>> ListAllAsync();
 
         Task<CategoryListViewModel> ListAllWithDeleted();
+
+        Task AddAsync(CategoryFormInputModel inputModel);
     }
 }

@@ -1,0 +1,46 @@
+﻿@model CategoryFormInputModel;
+@{
+    ViewData["Title"] = "Add Category";
+}
+
+<div class="container">
+    <div class="hero-title">
+        @ViewData["Title"]
+    </div>
+
+    <div class="form app-form">
+        <form asp-controller="Category" asp-action="Add" method="post">
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Slug">Slug</label>
+                <input asp-for="Slug" class="form-control">
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <a asp-controller="Home" asp-action="Index" class="btn-cancel">
+                    Cancel
+                </a>
+                <button class="btn-submit" type="submit">
+                    Create
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

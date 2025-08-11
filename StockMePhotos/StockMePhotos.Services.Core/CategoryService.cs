@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
+using StockMePhotos.Data.Models;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Category;
 using System;
@@ -37,6 +38,19 @@ namespace StockMePhotos.Services.Core
         public Task<CategoryListViewModel> ListAllWithDeleted()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddAsync(CategoryFormInputModel inputModel)
+        {
+            Category categoryToAdd = new Category
+            {
+                Name = inputModel.Name,
+                Description = inputModel.Description,
+                Slug = inputModel.Slug
+            };
+
+            await this.dbContext.Categories.AddAsync(categoryToAdd);
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }
