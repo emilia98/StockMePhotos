@@ -26,5 +26,34 @@ namespace StockMePhotos.Web.Controllers
 
             return this.View(allTags);
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            TagFormInputModel inputModel = new TagFormInputModel();
+            return this.View(inputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(TagFormInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            try
+            {
+                // TODO: Check for duplicating slugs -> lowercase
+                await this.tagService.AddAsync(inputModel);
+                return this.RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return this.RedirectToAction(nameof(Index));
+            }
+
+        }
     }
 }

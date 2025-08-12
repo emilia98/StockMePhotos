@@ -5,5 +5,7 @@ namespace StockMePhotos.Services.Core.Interfaces
     public interface ITagService
     {
         Task<IEnumerable<TagListViewModel>> ListAsync();
+
+        Task AddAsync(TagFormInputModel inputModel);
     }
 }
