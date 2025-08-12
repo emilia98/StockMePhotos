@@ -53,7 +53,46 @@ namespace StockMePhotos.Web.Controllers
                 Console.WriteLine(e.Message);
                 return this.RedirectToAction(nameof(Index));
             }
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(string id)
+        {
+            try
+            {
+                TagUpdateInputModel? inputModel = await this.tagService.GetUpdateDetailsByIdAsync(id);
+                if (inputModel == null)
+                {
+                    return this.RedirectToAction(nameof(Index));
+                }
+
+                return this.View(inputModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return this.RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(TagUpdateInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            try
+            {
+                await this.tagService.UpdateAsync(inputModel);
+                return this.RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return this.View();
         }
     }
 }

@@ -7,5 +7,9 @@ namespace StockMePhotos.Services.Core.Interfaces
         Task<IEnumerable<TagListViewModel>> ListAsync();
 
         Task AddAsync(TagFormInputModel inputModel);
+
+        Task<TagUpdateInputModel?> GetUpdateDetailsByIdAsync(string? id);
+
+        Task<bool> UpdateAsync(TagUpdateInputModel inputModel);
     }
 }

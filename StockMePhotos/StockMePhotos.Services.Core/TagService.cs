@@ -40,5 +40,53 @@ namespace StockMePhotos.Services.Core
             await this.dbContext.Tags.AddAsync(tagToAdd);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public async Task<TagUpdateInputModel?> GetUpdateDetailsByIdAsync(string? id)
+        {
+            bool isIdParsable = int.TryParse(id, out int tagId);
+            if (!isIdParsable)
+            {
+                return null;
+            }
+
+            TagUpdateInputModel? tagFound = await this.dbContext
+                .Tags
+                .AsNoTracking()
+                .Where(t => t.Id == tagId)
+                .Select(t => new TagUpdateInputModel
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Slug = t.Slug
+                })
+                .SingleOrDefaultAsync();
+
+            return tagFound;
+        }
+
+        public async Task<bool> UpdateAsync(TagUpdateInputModel inputModel)
+        {
+            Tag? editableTag = await this.FindTagByIdAsync(inputModel.Id);
+            if (editableTag == null)
+            {
+                return false;
+            }
+
+            editableTag.Name = inputModel.Name;
+            editableTag.Slug = inputModel.Slug;
+
+            this.dbContext.Update(editableTag);
+            await this.dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        private async Task<Tag?> FindTagByIdAsync(int id)
+        {
+            Tag? tag = await this.dbContext
+                .Tags
+                .FirstOrDefaultAsync(t => t.Id == id);
+            return tag;
+        }
     }
 }
