@@ -9,5 +9,15 @@
             public const int SlugMinLength = 1;
             public const int SlugMaxLength = 30;
         }
+
+        public static class Category
+        {
+            public const int NameMinLength = 1;
+            public const int NameMaxLength = 50;
+            public const int SlugMinLength = 1;
+            public const int SlugMaxLength = 50;
+            public const int DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 150;
+        }
     }
 }
