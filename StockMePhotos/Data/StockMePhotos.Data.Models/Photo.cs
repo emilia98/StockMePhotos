@@ -31,5 +31,7 @@ namespace StockMePhotos.Data.Models
 
         // IdentityUser
         public virtual PhotoUpload? PhotoUpload { get; set; }
+
+        public virtual ICollection<PhotoCategory> PhotoCategories { get; set; } = new List<PhotoCategory>();
     }
 }
