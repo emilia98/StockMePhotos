@@ -34,5 +34,6 @@ namespace StockMePhotos.Data.Models
         // PhotoUploadId?
 
         // PhotoUpload?
+        public virtual PhotoUpload? PhotoUpload { get; set; }
     }
 }
