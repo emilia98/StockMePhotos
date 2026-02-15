@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace StockMePhotos.Web
 {
@@ -20,6 +21,11 @@ namespace StockMePhotos.Web
                     .UseSqlServer(connectionString);
             });
 
+            builder.Services
+                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<StockMePhotosDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
 
             WebApplication app = builder.Build();
 
@@ -37,6 +43,7 @@ namespace StockMePhotos.Web
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.MapControllerRoute(
                 name: "default",
