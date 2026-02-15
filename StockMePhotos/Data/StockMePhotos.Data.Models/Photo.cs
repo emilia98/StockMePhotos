@@ -30,10 +30,6 @@ namespace StockMePhotos.Data.Models
         // UserId
 
         // IdentityUser
-
-        // PhotoUploadId?
-
-        // PhotoUpload?
         public virtual PhotoUpload? PhotoUpload { get; set; }
     }
 }

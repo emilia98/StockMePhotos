@@ -25,7 +25,7 @@
             public const int TitleMinLength = 1;
             public const int TitleMaxLength = 75;
             public const int SlugMinLength = 1;
-            public const int SlugMaxLength = 20;
+            public const int SlugMaxLength = 75;
             public const int DescriptionMinLength = 10;
             public const int DescriptionMaxLength = 500;
         }
