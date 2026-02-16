@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StockMePhotos.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockMePhotos.Data.Configurations
 {
@@ -91,6 +86,10 @@ namespace StockMePhotos.Data.Configurations
                 .Property(c => c.DateAdded)
                 .HasDefaultValueSql("GETUTCDATE()");
 
+            entity
+                .HasIndex(c => c.Slug)
+                .IsUnique();
+            
             entity
                 .HasData(Categories);
         }
