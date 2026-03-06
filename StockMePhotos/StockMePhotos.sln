@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E92ED66B-7E75-47A4-A85D-6A4D3ED11FA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{01F8E073-2B7F-4CAB-AF87-6D33F63AE07C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.Web", "Web\StockMePhotos.Web\StockMePhotos.Web.csproj", "{29420289-C8F8-A34C-5394-A92030FCB08E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.GCommon", "Web\StockMePhotos.GCommon\StockMePhotos.GCommon.csproj", "{575A8303-D7F2-C184-B8EF-BB938DAF50E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.ViewModels", "Web\StockMePhotos.ViewModels\StockMePhotos.ViewModels.csproj", "{1636961B-4E89-E1A6-AF93-5BBF6372EE16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.Data", "Data\StockMePhotos.Data\StockMePhotos.Data.csproj", "{1271A7CC-CE42-C735-0DE5-7A177E780F97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.Data.Models", "Data\StockMePhotos.Data.Models\StockMePhotos.Data.Models.csproj", "{D38DF70A-6248-EAB4-B461-4513443BA8A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.Data.Common", "Data\StockMePhotos.Data.Common\StockMePhotos.Data.Common.csproj", "{BDB64037-19BD-FF7F-1AA4-48BF8C08C89C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.Services.Core", "Services\StockMePhotos.Services.Core\StockMePhotos.Services.Core.csproj", "{3E4C6696-2C7F-8006-9888-4AD5A1919BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockMePhotos.Services.Common", "Services\StockMePhotos.Services.Common\StockMePhotos.Services.Common.csproj", "{4030EE41-0D25-5258-6022-E5089E0D9B71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29420289-C8F8-A34C-5394-A92030FCB08E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29420289-C8F8-A34C-5394-A92030FCB08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29420289-C8F8-A34C-5394-A92030FCB08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29420289-C8F8-A34C-5394-A92030FCB08E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{575A8303-D7F2-C184-B8EF-BB938DAF50E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{575A8303-D7F2-C184-B8EF-BB938DAF50E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{575A8303-D7F2-C184-B8EF-BB938DAF50E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{575A8303-D7F2-C184-B8EF-BB938DAF50E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1636961B-4E89-E1A6-AF93-5BBF6372EE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1636961B-4E89-E1A6-AF93-5BBF6372EE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1636961B-4E89-E1A6-AF93-5BBF6372EE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1636961B-4E89-E1A6-AF93-5BBF6372EE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1271A7CC-CE42-C735-0DE5-7A177E780F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1271A7CC-CE42-C735-0DE5-7A177E780F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1271A7CC-CE42-C735-0DE5-7A177E780F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1271A7CC-CE42-C735-0DE5-7A177E780F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38DF70A-6248-EAB4-B461-4513443BA8A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38DF70A-6248-EAB4-B461-4513443BA8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38DF70A-6248-EAB4-B461-4513443BA8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38DF70A-6248-EAB4-B461-4513443BA8A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB64037-19BD-FF7F-1AA4-48BF8C08C89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB64037-19BD-FF7F-1AA4-48BF8C08C89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB64037-19BD-FF7F-1AA4-48BF8C08C89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB64037-19BD-FF7F-1AA4-48BF8C08C89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4C6696-2C7F-8006-9888-4AD5A1919BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4C6696-2C7F-8006-9888-4AD5A1919BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4C6696-2C7F-8006-9888-4AD5A1919BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4C6696-2C7F-8006-9888-4AD5A1919BE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4030EE41-0D25-5258-6022-E5089E0D9B71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4030EE41-0D25-5258-6022-E5089E0D9B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4030EE41-0D25-5258-6022-E5089E0D9B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4030EE41-0D25-5258-6022-E5089E0D9B71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29420289-C8F8-A34C-5394-A92030FCB08E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{575A8303-D7F2-C184-B8EF-BB938DAF50E7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{1636961B-4E89-E1A6-AF93-5BBF6372EE16} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{1271A7CC-CE42-C735-0DE5-7A177E780F97} = {E92ED66B-7E75-47A4-A85D-6A4D3ED11FA0}
+		{D38DF70A-6248-EAB4-B461-4513443BA8A9} = {E92ED66B-7E75-47A4-A85D-6A4D3ED11FA0}
+		{BDB64037-19BD-FF7F-1AA4-48BF8C08C89C} = {E92ED66B-7E75-47A4-A85D-6A4D3ED11FA0}
+		{3E4C6696-2C7F-8006-9888-4AD5A1919BE8} = {01F8E073-2B7F-4CAB-AF87-6D33F63AE07C}
+		{4030EE41-0D25-5258-6022-E5089E0D9B71} = {01F8E073-2B7F-4CAB-AF87-6D33F63AE07C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BA2B5E4-618D-48D4-800A-9928E2BA353C}
+	EndGlobalSection
+EndGlobal
