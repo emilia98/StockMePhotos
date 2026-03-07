@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StockMePhotos.Data.Models;
 using System.Reflection;
 
 namespace StockMePhotos.Data
@@ -11,7 +12,7 @@ namespace StockMePhotos.Data
         }
 
         // DbSets go here
-
+        public virtual DbSet<Tag> Tags { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

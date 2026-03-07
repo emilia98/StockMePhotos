@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StockMePhotos.Data.Common\StockMePhotos.Data.Common.csproj" />
+  </ItemGroup>
+
 </Project>
