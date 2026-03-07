@@ -14,6 +14,8 @@ namespace StockMePhotos.Data
         // DbSets go here
         public virtual DbSet<Tag> Tags { get; set; } = null!;
 
+        public virtual DbSet<Category> Categories { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
