@@ -29,5 +29,10 @@
             public const int DescriptionMinLength = 10;
             public const int DescriptionMaxLength = 500;
         }
+
+        public static class PhotoUpload
+        {
+            public const int ImageURLMaxLength = 100;
+        }
     }
 }

@@ -32,7 +32,10 @@ namespace StockMePhotos.Data.Models
         // IdentityUser
 
         // PhotoUploadId?
+        // [ForeignKey(nameof(PhotoUpload))]
+        // public int? PhotoUploadId { get; set; }
 
         // PhotoUpload?
+        public virtual PhotoUpload? PhotoUpload { get; set; }
     }
 }
