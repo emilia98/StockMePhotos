@@ -23,5 +23,7 @@ namespace StockMePhotos.Data.Models
         [Required]
         [Column(TypeName = DateTimeColumnType)]
         public DateTime DateAdded { get; set; }
+
+        public virtual ICollection<PhotoCategory> PhotoCategories { get; set; } = new List<PhotoCategory>();
     }
 }

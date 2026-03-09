@@ -20,6 +20,8 @@ namespace StockMePhotos.Data
 
         public virtual DbSet<PhotoUpload> PhotoUploads { get; set; } = null!;
 
+        public virtual DbSet<PhotoCategory> PhotosCategories { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
