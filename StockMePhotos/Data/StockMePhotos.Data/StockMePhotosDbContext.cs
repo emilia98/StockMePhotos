@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data.Models;
 using System.Reflection;
 
 namespace StockMePhotos.Data
 {
-    public class StockMePhotosDbContext : DbContext
+    public class StockMePhotosDbContext : IdentityDbContext
     {
         public StockMePhotosDbContext(DbContextOptions<StockMePhotosDbContext> options)
             : base(options)
