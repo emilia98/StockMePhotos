@@ -1,8 +1,9 @@
-﻿using StockMePhotos.Data.Models.Base;
+﻿using Microsoft.AspNetCore.Identity;
+using StockMePhotos.Data.Models.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static StockMePhotos.Data.Common.EntityConstants;
 using static StockMePhotos.Data.Common.DataValidation.Photo;
+using static StockMePhotos.Data.Common.EntityConstants;
 
 namespace StockMePhotos.Data.Models
 {
@@ -28,8 +29,12 @@ namespace StockMePhotos.Data.Models
         public DateTime? LastModified { get; set; } = null;
 
         // UserId
+        [Required]
+        [ForeignKey(nameof(IdentityUser))]
+        public string UserId { get; set; } = null!;
 
         // IdentityUser
+        public virtual IdentityUser User { get; set; } = null!;
 
         // PhotoUploadId?
         // [ForeignKey(nameof(PhotoUpload))]
