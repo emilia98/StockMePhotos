@@ -87,6 +87,10 @@ namespace StockMePhotos.Data.Configurations
                 .HasDefaultValueSql("GETUTCDATE()");
 
             entity
+                .HasIndex(c => c.Slug)
+                .IsUnique();
+
+            entity
                 .HasData(Categories);
         }
     }
