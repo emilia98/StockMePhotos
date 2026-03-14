@@ -20,3 +20,58 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Photo Listing */
+div.photos-container div.photos-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+div.photos-container div.photos-list div.photo-card {
+    width: 30%;
+    box-sizing: content-box;
+    display: inline-block;
+    max-width: 50%;
+    border: 1px dashed black;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+div.photos-container div.photos-list div.photo-card .photo-src {
+    max-width: 100%;
+    width: 100%;
+}
+
+div.photos-container div.photos-list div.photo-card .photo-src img {
+    width: 100%;
+    height: 250px;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+
+div.photos-container div.photos-list div.photo-card .photo-title {
+    margin: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25em;
+    text-transform: uppercase;
+}
+
+div.photos-container div.photos-list div.photo-card div.photo-categories {
+    padding: 5px;
+    background: green;
+    margin: 5px 0;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    line-height: 20px;
+}
+/* Photo Listing */

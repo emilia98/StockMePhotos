@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
-using Microsoft.AspNetCore.Identity;
+using StockMePhotos.Services.Core;
+using StockMePhotos.Services.Core.Interfaces;
 
 namespace StockMePhotos.Web
 {
@@ -26,6 +28,8 @@ namespace StockMePhotos.Web
                  .AddEntityFrameworkStores<StockMePhotosDbContext>()
                  .AddDefaultTokenProviders()
                  .AddDefaultUI();
+
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
 
             WebApplication app = builder.Build();
 

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<PhotoViewModel>;
+
+<div class="photos-container">
+    <div class="photos-list">
+        @foreach (PhotoViewModel photo in Model)
+        {
+            <div class="photo-card">
+                <div class="photo-title">@photo.Title</div>
+                <div class="photo-src">
+                    <img src="@photo.ImageURL" />
+                </div>
+                <div class="photo-categories">
+                    @foreach (string category in photo.Categories)
+                    {
+                        <span>@category</span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

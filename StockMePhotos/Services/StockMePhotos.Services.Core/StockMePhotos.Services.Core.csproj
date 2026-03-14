@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\StockMePhotos.Data.Models\StockMePhotos.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\StockMePhotos.Data\StockMePhotos.Data.csproj" />
+    <ProjectReference Include="..\..\Web\StockMePhotos.ViewModels\StockMePhotos.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
