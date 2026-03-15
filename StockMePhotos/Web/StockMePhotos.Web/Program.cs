@@ -30,6 +30,7 @@ namespace StockMePhotos.Web
                  .AddDefaultUI();
 
             builder.Services.AddScoped<IPhotoService, PhotoService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             WebApplication app = builder.Build();
 
