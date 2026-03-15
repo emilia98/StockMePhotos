@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Data\StockMePhotos.Data.Common\StockMePhotos.Data.Common.csproj" />
+	  <ProjectReference Include="..\StockMePhotos.GCommon\StockMePhotos.GCommon.csproj" />
+	</ItemGroup>
+
 </Project>
