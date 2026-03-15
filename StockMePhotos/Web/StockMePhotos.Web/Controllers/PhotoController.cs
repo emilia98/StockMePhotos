@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockMePhotos.GCommon;
+using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Photo;
 using System.Security.Claims;
@@ -12,13 +13,17 @@ namespace StockMePhotos.Web.Controllers
     {
         private readonly IPhotoService photoService;
         private readonly ICategoryService categoryService;
+        private readonly CloudinaryService cloudinaryService;
+
 
         public PhotoController(
             IPhotoService photoService,
-            ICategoryService categoryService)
+            ICategoryService categoryService,
+            CloudinaryService cloudinaryService)
         {
             this.photoService = photoService;
             this.categoryService = categoryService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task<IActionResult> Index()
@@ -69,6 +74,7 @@ namespace StockMePhotos.Web.Controllers
             try
             {
                 await this.photoService.AddNewPhoto(inputModel, userId);
+                string uploadImageUrl = await this.cloudinaryService.UploadImageAsync(image!);
             }
             catch (Exception e)
             {

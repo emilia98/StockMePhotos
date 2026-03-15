@@ -32,11 +32,10 @@ namespace StockMePhotos.Data.Configurations
             {
                 Id = id,
                 UserName = username,
-                NormalizedUserName = username.ToUpper(),
+                NormalizedUserName = email.ToUpper(),
                 Email = email,
                 NormalizedEmail = email.ToUpper(),
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
             };
 
             user.PasswordHash = passwordHasher.HashPassword(user, password);

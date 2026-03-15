@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
+using StockMePhotos.GCommon;
+using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Core;
 using StockMePhotos.Services.Core.Interfaces;
 
@@ -31,6 +33,12 @@ namespace StockMePhotos.Web
 
             builder.Services.AddScoped<IPhotoService, PhotoService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+            /* Cloudinary */
+            builder.Services.Configure<CloudinarySettings>(
+                builder.Configuration.GetSection("Cloudinary")
+            );
+            builder.Services.AddScoped<CloudinaryService>();
 
             WebApplication app = builder.Build();
 
