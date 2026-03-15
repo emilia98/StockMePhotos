@@ -34,5 +34,14 @@
             public const string CategoryNotFound = "The selected category is not found.";
             public const string ImageRequired = "The image is required.";
         }
+
+        public static class Image
+        {
+            public const string ImageRequired = "The image is required.";
+            public const string ImageSizeExceeded = "The image shouldn't exceed {0}MB!";
+            public const string ImageAllowedExtensions = "The allowed file extensions are {0}!";
+            public const string InvalidImage = "The image is invalid!";
+            public const string ImageUnreadble = "The file cannot be read!";
+        }
     }
 }

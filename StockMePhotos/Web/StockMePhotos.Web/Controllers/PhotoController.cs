@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StockMePhotos.GCommon;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Photo;
 using System.Security.Claims;
@@ -55,6 +56,15 @@ namespace StockMePhotos.Web.Controllers
             }
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            IFormFile? image = inputModel.Image;
+            string? imageError = null;
+            bool isValidImage = ImageChecker.IsValidImage(image, out imageError);
+            if (!isValidImage)
+            {
+                ModelState.AddModelError(nameof(inputModel.Image), imageError ?? "Unknown image error");
+                return View(inputModel);
+            }
 
             try
             {
