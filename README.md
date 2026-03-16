@@ -135,10 +135,13 @@ Describe how to use the main features of the app after launching it. Add screens
 9. You can remove photo from 'Favorites', as a logged-in user.
 ```
 * Credentials for already seeded users:
+
 | Username | Password |
+| -------- | ------ |
 | user1@example.com | user1.1234 |
 | emilia@example.com | emilia.1234 |
 | WhaTheFuck@example.com | WhaTheFuck.1234 |
+
 
 > 💡 **Tip:** You can add screenshots using: `![Screenshot](docs/screenshot.png)`
 
