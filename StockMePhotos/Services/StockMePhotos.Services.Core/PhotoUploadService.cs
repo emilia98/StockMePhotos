@@ -1,4 +1,5 @@
-﻿using StockMePhotos.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StockMePhotos.Data;
 using StockMePhotos.Data.Models;
 using StockMePhotos.Services.Core.Interfaces;
 
@@ -23,6 +24,18 @@ namespace StockMePhotos.Services.Core
 
             await this.dbContext.PhotoUploads.AddAsync(newPhotoUpload);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemovePhotoUploadAsync(string photoId)
+        {
+            PhotoUpload? photoUpload = await this.dbContext.PhotoUploads
+                .FirstOrDefaultAsync(pu => pu.PhotoId.ToString().ToLower() == photoId.ToLower());
+
+            if (photoUpload != null)
+            {
+                this.dbContext.PhotoUploads.Remove(photoUpload);
+                await this.dbContext.SaveChangesAsync();
+            }
         }
     }
 }

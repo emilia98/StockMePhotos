@@ -3,5 +3,7 @@
     public interface IPhotoCategoryService
     {
         Task AddCategoryToPhotoAsync(Guid photoId, int categoryId);
+
+        Task RemoveCategoryFromPhotoAsync(string photoId);
     }
 }

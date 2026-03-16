@@ -3,5 +3,7 @@
     public interface IPhotoUploadService
     {
         Task AddPhotoUploadAsync(Guid photoId, string imageURL);
+
+        Task RemovePhotoUploadAsync(string photoId);
     }
 }

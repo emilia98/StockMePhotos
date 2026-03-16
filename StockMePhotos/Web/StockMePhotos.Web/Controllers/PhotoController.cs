@@ -114,6 +114,39 @@ namespace StockMePhotos.Web.Controllers
 
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string? creatorId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
+
+            if (string.IsNullOrEmpty(creatorId) || userId != creatorId)
+            {
+                return RedirectToAction(nameof(Details), new { id = id });
+            }
+
+            try
+            {
+                bool deletePhotoSuccess = await this.photoService.DeletePhotoByIdAsync(id);
+
+                if (deletePhotoSuccess)
+                {
+                    await this.photoUploadService.RemovePhotoUploadAsync(id);
+                    await this.photoCategoryService.RemoveCategoryFromPhotoAsync(id);
+
+                    return RedirectToAction(nameof(MyPhotos));
+                }
+
+                return RedirectToAction(nameof(Details), new { id = id });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
         [HttpGet]
         [Route("Photo/My")]
         [Authorize]

@@ -31,5 +31,16 @@ namespace StockMePhotos.Services.Core
             await this.dbContext.PhotosCategories.AddAsync(newPhotoCategory);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public async Task RemoveCategoryFromPhotoAsync(string photoId)
+        {
+            IEnumerable<PhotoCategory> photoCategoriesToRemove = await this.dbContext
+                .PhotosCategories
+                .Where(pc => pc.PhotoId.ToString().ToLower() == photoId.ToLower())
+                .ToListAsync();
+
+            this.dbContext.RemoveRange(photoCategoriesToRemove);
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }

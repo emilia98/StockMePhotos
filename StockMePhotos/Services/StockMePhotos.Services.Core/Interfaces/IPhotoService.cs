@@ -15,5 +15,9 @@ namespace StockMePhotos.Services.Core.Interfaces
         Task<IEnumerable<PhotoViewModel>> GetAllPhotosByUserAsync(string userId);
 
         Task<PhotoDetailsViewModel?> GetDetails(string id, string? userId);
+
+        Task<string?> GetPhotoOwnerByPhotoIdAsync(string id);
+
+        Task<bool> DeletePhotoByIdAsync(string photoId);
     }
 }

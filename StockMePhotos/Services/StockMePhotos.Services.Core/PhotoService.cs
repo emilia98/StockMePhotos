@@ -31,6 +31,22 @@ namespace StockMePhotos.Services.Core
             return photoEntity.Id;
         }
 
+        public async Task<bool> DeletePhotoByIdAsync(string photoId)
+        {
+            // Get The Photo Entity
+            Photo? photoEntity = await this.dbContext
+                .Photos
+                .FirstOrDefaultAsync(p => p.Id.ToString().ToLower() == photoId.ToLower() && p.IsDeleted == false);
+
+            if (photoEntity == null)
+                return false;
+
+            photoEntity.IsDeleted = true;
+            this.dbContext.Photos.Update(photoEntity);
+            await this.dbContext.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<IEnumerable<PhotoViewModel>> GetAll()
         {
             return await this.dbContext.Photos
@@ -56,7 +72,7 @@ namespace StockMePhotos.Services.Core
                 .AsNoTracking()
                 .Include(p => p.PhotoUpload)
                 .Include(p => p.PhotoCategories)
-                .Where(p => p.UserId == userId)
+                .Where(p => p.UserId == userId && p.IsDeleted == false)
                 .OrderByDescending(p => p.DateAdded)
                 .Select(p => new PhotoViewModel
                 {
@@ -119,6 +135,15 @@ namespace StockMePhotos.Services.Core
             return viewModel;
         }
 
+        public async Task<string?> GetPhotoOwnerByPhotoIdAsync(string id)
+        {
+            Photo? photoEntity = await this.dbContext.Photos
+                .AsNoTracking()
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.Id.ToString().ToLower() == id.ToLower() && p.IsDeleted == false);
+
+            return photoEntity?.UserId;
+        }
 
         private async Task<Photo?> GetPhotoEntityById(string id)
         {
@@ -129,7 +154,7 @@ namespace StockMePhotos.Services.Core
                 .Include(p => p.ToFavorites)
                 .Include(p => p.PhotoCategories)
                 .ThenInclude(pc => pc.Category)
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id && p.IsDeleted == false);
+                .FirstOrDefaultAsync(p => p.Id.ToString().ToLower() == id.ToLower() && p.IsDeleted == false);
 
             return photoEntity;
         }
