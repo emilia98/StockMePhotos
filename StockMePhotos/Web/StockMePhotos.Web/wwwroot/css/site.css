@@ -1,4 +1,8 @@
-﻿html {
+﻿:root {
+    --main-color: #1ca3d3;
+}
+
+html {
     font-size: 14px;
 }
 
@@ -233,3 +237,81 @@ div.my-photo-list h2 {
     margin: 20px;
 }
 /* List My Photos */
+
+
+/* PHOTO DETAILS */
+div.photo-details-container {
+    height: 100%;
+    margin: 20px 0;
+}
+
+div.photo-details-container h1 {
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2.25rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    line-height: 3rem;
+}
+
+div.photo-details-container div.content {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+div.photo-details-container div.image img {
+    width: 100%;
+}
+
+div.photo-details-container div.categories-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 10px 0;
+    gap: 5px;
+}
+
+div.photo-details-container a.ca {
+    color: var(--main-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div.photo-details-container div.image-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+div.d-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: gray;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+div.photo-details-container div.photo-data {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+div.photo-details-container div.photo-data div.categories-list span.sc {
+    background: var(--main-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+div.photo-details-container div.actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* PHOTO DETAILS */

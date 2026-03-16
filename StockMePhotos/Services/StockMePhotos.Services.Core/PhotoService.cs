@@ -2,6 +2,7 @@
 using StockMePhotos.Data;
 using StockMePhotos.Data.Models;
 using StockMePhotos.Services.Core.Interfaces;
+using StockMePhotos.ViewModels.Category;
 using StockMePhotos.ViewModels.Photo;
 
 namespace StockMePhotos.Services.Core
@@ -88,13 +89,47 @@ namespace StockMePhotos.Services.Core
             return null;
         }
 
+        public async Task<PhotoDetailsViewModel?> GetDetails(string id, string? currentUserId)
+        {
+            Photo? photoEntity = await this.GetPhotoEntityById(id);
+
+            if (photoEntity == null)
+            {
+                return null;
+            }
+
+            PhotoDetailsViewModel viewModel = new PhotoDetailsViewModel
+            {
+                Id = photoEntity.Id.ToString(),
+                Title = photoEntity.Title,
+                Description = photoEntity.Description,
+                DateAdded = photoEntity.DateAdded.ToString("dd/MM/yyyy"),
+                ImageURL = photoEntity!.PhotoUpload?.ImageURL,
+                Categories = photoEntity!.PhotoCategories.Select(pc => new CategoryViewModel
+                {
+                    Id = pc.CategoryId,
+                    Name = pc.Category.Name,
+                }) ?? new List<CategoryViewModel>(),
+                UserName = photoEntity.User?.UserName?.ToLower() ?? "default@user.com",
+                CreatorId = photoEntity.UserId,
+                IsOwner = photoEntity.UserId == currentUserId,
+                IsInFavoriteList = currentUserId != null ? photoEntity.ToFavorites.Any(fp => fp.UserId == currentUserId) : false
+            };
+
+            return viewModel;
+        }
+
+
         private async Task<Photo?> GetPhotoEntityById(string id)
         {
             Photo? photoEntity = await this.dbContext.Photos
                 .AsNoTracking()
                 .Include(p => p.PhotoUpload)
+                .Include(p => p.User)
+                .Include(p => p.ToFavorites)
                 .Include(p => p.PhotoCategories)
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id);
+                .ThenInclude(pc => pc.Category)
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id && p.IsDeleted == false);
 
             return photoEntity;
         }

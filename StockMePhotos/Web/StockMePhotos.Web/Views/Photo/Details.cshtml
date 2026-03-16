@@ -1,0 +1,70 @@
+﻿﻿@using StockMePhotos.ViewModels.Photo;
+@model PhotoDetailsViewModel;
+
+<div class="photo-details-container">
+    <h1>@Model.Title</h1>
+    <div class="image-wrapper">
+        <div class="col-8">
+            <div class="image">
+                <img src="@Model.ImageURL" />
+            </div>
+        </div>
+        <div class="col-4 photo-data">
+            <div class="desc">
+                <div class="d-label">Description</div>
+                @Model.Description
+            </div>
+            <div class="date-added">
+                <div class="d-label">Date Added</div>
+                @Model.DateAdded
+            </div>
+            <div class="creator">
+                <div class="d-label">Creator</div>
+                <a class="ca" asp-controller="Photo" asp-action="User" asp-route-id="@Model.CreatorId">@Model.UserName</a>
+            </div>
+            <div class="categories">
+                <div class="d-label">Categories</div>
+                <div class="categories-list">
+
+                    @foreach (var c in Model.Categories)
+                    {
+                        <span class="sc" data-cat-id="@c.Id">@c.Name</span>
+                    }
+                </div>
+            </div>
+            <div class="actions">
+
+                @if (Model.IsOwner)
+                {
+                    <a class="btn btn-warning" asp-controller="Photo" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                    <form asp-controller="Photo" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                }
+                else if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <!--
+                    <form asp-action="Download" method="post" asp-route-id="@Model.Id">
+                        <button type="submit" class="btn btn-primary">Download</button>
+                    </form>
+                    -->
+                    if (Model.IsInFavoriteList)
+                    {
+                        <form asp-action="RemoveFromFavorites" method="post" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn btn-outline-danger">Remove From Favorites</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="AddToFavorites" method="post" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn btn-outline-success">Add To Favorites</button>
+                        </form>
+
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>

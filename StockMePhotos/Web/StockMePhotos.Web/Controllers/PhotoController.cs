@@ -40,6 +40,24 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(string? id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            PhotoDetailsViewModel? viewModel = await this.photoService.GetDetails(id, userId);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+
+            return this.View(viewModel);
+        }
+
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Add()
         {
