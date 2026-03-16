@@ -44,5 +44,7 @@ namespace StockMePhotos.Data.Models
         public virtual PhotoUpload? PhotoUpload { get; set; }
 
         public virtual ICollection<PhotoCategory> PhotoCategories { get; set; } = new List<PhotoCategory>();
+
+        public virtual ICollection<FavoritePhoto> ToFavorites { get; set; } = new List<FavoritePhoto>();
     }
 }
