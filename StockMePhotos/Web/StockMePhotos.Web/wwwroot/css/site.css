@@ -25,6 +25,14 @@ body {
     margin-bottom: 60px;
 }
 
+.navbar-brand {
+    color: var(--main-color) !important;
+    text-transform: lowercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 1.25rem;
+}
+
 nav ul.cm-navbar {
     gap: 5px;
     align-items: anchor-center;
