@@ -1,0 +1,43 @@
+﻿@using StockMePhotos.ViewModels.Category
+@model MyPhotosListViewModel
+
+@{
+    ViewData["PageTitle"] = "Favorite Photos";
+}
+
+<div class="page-content">
+    <h1 class="page-title">@ViewData["PageTitle"]</h1>
+
+    <div class="my-photo-list">
+        @if (Model.AllPhotos.Count() == 0)
+        {
+            <h2>No favorite photos yet to show.</h2>
+        }
+        else
+        {
+            @foreach (PhotoViewModel photo in Model.AllPhotos)
+            {
+                <div class="photo-v-card">
+                    <div class="photo-res">
+                        <img src="@photo.ImageURL" />
+                    </div>
+                    <div class="photo-info">
+                        <h3>@photo.Title</h3>
+                        <p>Date Added: @photo.DateAdded</p>
+                        <div class="categories">
+                            @foreach (string cat in photo.Categories)
+                            {
+                                <span class="s-cat">@cat</span>
+                            }
+                        </div>
+                        <div class="actions">
+                            <form asp-action="RemoveFromFavorites" method="post" asp-route-id="@photo.Id">
+                                <button type="submit" class="btn btn-outline-danger">Remove From Favorites</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

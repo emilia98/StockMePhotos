@@ -15,6 +15,7 @@ namespace StockMePhotos.Web.Controllers
         private readonly ICategoryService categoryService;
         private readonly IPhotoUploadService photoUploadService;
         private readonly IPhotoCategoryService photoCategoryService;
+        private readonly IFavoritePhotoService favoritePhotoService;
         private readonly CloudinaryService cloudinaryService;
 
 
@@ -23,12 +24,14 @@ namespace StockMePhotos.Web.Controllers
             ICategoryService categoryService,
             IPhotoUploadService photoUploadService,
             IPhotoCategoryService photoCategoryService,
+            IFavoritePhotoService favoritePhotoService,
             CloudinaryService cloudinaryService)
         {
             this.photoService = photoService;
             this.categoryService = categoryService;
             this.photoUploadService = photoUploadService;
             this.photoCategoryService = photoCategoryService;
+            this.favoritePhotoService = favoritePhotoService;
             this.cloudinaryService = cloudinaryService;
         }
 
@@ -250,6 +253,78 @@ namespace StockMePhotos.Web.Controllers
             {
                 AllPhotos = photosByUser
             };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddToFavorites(string id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string? ownerId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
+
+            if (ownerId == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (ownerId == userId)
+            {
+                return RedirectToAction(nameof(MyPhotos));
+            }
+
+            try
+            {
+                await this.favoritePhotoService.AddPhotoToFavorites(id, userId);
+                return RedirectToAction(nameof(Favorites));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RemoveFromFavorites(string id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string? ownerId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
+
+            if (ownerId == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (ownerId == userId)
+            {
+                return RedirectToAction(nameof(MyPhotos));
+            }
+
+            try
+            {
+                await this.favoritePhotoService.RemovePhotoFromFavorites(id, userId);
+                return RedirectToAction(nameof(Favorites));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Favorites()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            IEnumerable<PhotoViewModel> favoritePhotosByUser = await this.favoritePhotoService.GetAllFavoritePhotosByUserAsync(userId);
+            MyPhotosListViewModel viewModel = new MyPhotosListViewModel()
+            {
+                AllPhotos = favoritePhotosByUser
+            };
+
             return View(viewModel);
         }
     }

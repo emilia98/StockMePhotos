@@ -35,6 +35,7 @@ namespace StockMePhotos.Web
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IPhotoUploadService, PhotoUploadService>();
             builder.Services.AddScoped<IPhotoCategoryService, PhotoCategoryService>();
+            builder.Services.AddScoped<IFavoritePhotoService, FavoritePhotoService>();
 
             /* Cloudinary */
             builder.Services.Configure<CloudinarySettings>(

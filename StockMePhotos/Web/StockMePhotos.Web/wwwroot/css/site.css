@@ -224,6 +224,7 @@ div.photos-container div.photos-list {
 .photo-v-card .photo-res img {
     height: auto;
     width: 100%;
+    max-height: 250px;
 }
 
 .photo-v-card .photo-info {
