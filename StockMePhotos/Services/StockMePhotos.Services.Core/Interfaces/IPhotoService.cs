@@ -16,6 +16,10 @@ namespace StockMePhotos.Services.Core.Interfaces
 
         Task<PhotoDetailsViewModel?> GetDetails(string id, string? userId);
 
+        Task<UpdatePhotoInputModel?> GetEntityToUpdateByIdAsync(string id);
+
+        Task<bool> UpdatePhotoEntity(string photoId, UpdatePhotoInputModel inputModel);
+
         Task<string?> GetPhotoOwnerByPhotoIdAsync(string id);
 
         Task<bool> DeletePhotoByIdAsync(string photoId);

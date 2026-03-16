@@ -135,6 +135,46 @@ namespace StockMePhotos.Services.Core
             return viewModel;
         }
 
+        public async Task<UpdatePhotoInputModel?> GetEntityToUpdateByIdAsync(string id)
+        {
+            Photo? photoEntity = await this.GetPhotoEntityById(id);
+            if (photoEntity == null)
+            {
+                return null;
+            }
+
+            UpdatePhotoInputModel inputModel = new UpdatePhotoInputModel()
+            {
+                Id = id,
+                Title = photoEntity.Title,
+                Description = photoEntity.Description,
+                CategoryId = photoEntity.PhotoCategories.FirstOrDefault()!.CategoryId,
+                ImageURL = photoEntity.PhotoUpload.ImageURL,
+                UserId = photoEntity.UserId
+            };
+
+            return inputModel;
+        }
+
+        public async Task<bool> UpdatePhotoEntity(string photoId, UpdatePhotoInputModel inputModel)
+        {
+            Photo? photoEntity = await this.dbContext
+                .Photos
+                .FirstOrDefaultAsync(p => p.Id.ToString().ToLower() == photoId.ToLower());
+
+            if (photoEntity == null)
+                return false;
+
+            photoEntity.Title = inputModel.Title;
+            photoEntity.Description = inputModel.Description;
+            photoEntity.LastModified = DateTime.UtcNow;
+
+            this.dbContext.Photos.Update(photoEntity);
+            await this.dbContext.SaveChangesAsync();
+            return true;
+        }
+
+
         public async Task<string?> GetPhotoOwnerByPhotoIdAsync(string id)
         {
             Photo? photoEntity = await this.dbContext.Photos

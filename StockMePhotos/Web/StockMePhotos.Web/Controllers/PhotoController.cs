@@ -98,7 +98,7 @@ namespace StockMePhotos.Web.Controllers
             try
             {
                 Guid photoId = await this.photoService.AddNewPhoto(inputModel, userId);
-                await this.photoCategoryService.AddCategoryToPhotoAsync(photoId, categoryId);
+                await this.photoCategoryService.AddCategoryToPhotoAsync(photoId.ToString(), categoryId);
                 string uploadImageUrl = await this.cloudinaryService.UploadImageAsync(image!);
                 await this.photoUploadService.AddPhotoUploadAsync(photoId, uploadImageUrl);
             }
@@ -144,6 +144,98 @@ namespace StockMePhotos.Web.Controllers
             {
                 Console.WriteLine(e.Message);
                 return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(string id)
+        {
+            UpdatePhotoInputModel? inputModel = await this.photoService.GetEntityToUpdateByIdAsync(id);
+            if (inputModel == null)
+            {
+                return RedirectToAction(nameof(MyPhotos));
+            }
+
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string creatorId = inputModel.UserId;
+
+            // If the current user is not the creator
+            if (creatorId != userId)
+            {
+                return RedirectToAction(nameof(MyPhotos));
+            }
+
+            inputModel.Categories = await this.categoryService.ListAllCategories();
+            return View(inputModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(string id, UpdatePhotoInputModel inputModel)
+        {
+            UpdatePhotoInputModel? oldInputModel = await this.photoService.GetEntityToUpdateByIdAsync(id);
+            if (inputModel == null)
+            {
+                return RedirectToAction(nameof(MyPhotos));
+            }
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            // string? ownerId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
+            string? ownerId = oldInputModel!.UserId;
+            if (ownerId == null || ownerId != userId)
+            {
+                return RedirectToAction(nameof(MyPhotos));
+            }
+
+            inputModel.Categories = await this.categoryService.ListAllCategories();
+            if (!ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            int oldCategory = oldInputModel.CategoryId;
+            int newCategory = inputModel.CategoryId;
+            bool isValidCategory = inputModel.Categories.Any(c => c.Id == newCategory);
+            if (!isValidCategory)
+            {
+                ModelState.AddModelError(nameof(inputModel.CategoryId), CategoryNotFound);
+                return View(inputModel);
+            }
+
+            try
+            {
+                if (newCategory != oldCategory)
+                {
+                    await this.photoCategoryService.RemoveCategoryFromPhotoAsync(id);
+                    await this.photoCategoryService.AddCategoryToPhotoAsync(id, newCategory);
+                }
+
+                bool updateSucess = await this.photoService.UpdatePhotoEntity(id, inputModel);
+                if (updateSucess)
+                {
+                    return RedirectToAction(nameof(Details), new { id = id });
+                }
+
+                return RedirectToAction(nameof(MyPhotos));
+
+                // If new photo is added
+                // Remove the old photo
+                // Add the new photo
+                // Guid photoId = await this.photoService.AddNewPhoto(inputModel, userId);
+                // if 
+                // await this.photoCategoryService.AddCategoryToPhotoAsync(photoId, categoryId);
+                // string uploadImageUrl = await this.cloudinaryService.UploadImageAsync(image!);
+                // await this.photoUploadService.AddPhotoUploadAsync(photoId, uploadImageUrl);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ModelState.AddModelError(string.Empty, "Error occurred while trying to update the photo!");
+                inputModel.Categories = await this.categoryService.ListAllCategories();
+                return View(inputModel);
+                throw;
             }
         }
 

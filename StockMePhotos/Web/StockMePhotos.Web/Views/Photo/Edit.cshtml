@@ -1,0 +1,78 @@
+﻿@model UpdatePhotoInputModel;
+
+@{
+    ViewData["PageTitle"] = "Update Photo";
+}
+
+<div class="add-photo photo-input form-input page-content">
+    <h1 class="page-title">@ViewData["PageTitle"]</h1>
+
+    <form asp-controller="Photo" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div class="form-floating mb-3">
+            <input asp-for="Title" class="form-control" />
+            <label asp-for="Title" class="form-label">Title</label>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3 description">
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <label asp-for="Description" class="form-label">Description</label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3 categories-list">
+            <select asp-for="@Model.CategoryId" class="form-control form-select" aria-required="true">
+                <option value="" selected="true">-- Select Image Category --</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+            <label asp-for="@Model.CategoryId" class="form-label">Category</label>
+            <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+
+        </div>
+        <div class="spacing mb-4 mt-4">
+            <hr />
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ImageURL))
+        {
+            <div class="mb-3 image-upload-prev">
+                <div class="image-upload">
+                    <div class="form-field-plain">
+                        <label class="form-label">Selected Image</label>
+                        <input class="form-control" disabled value="@Model.ImageURL" />
+                    </div>
+                </div>
+                <div class="image-preview">
+                    <div class="preview-img" style="background-image: url(@Model.ImageURL)">
+                    </div>
+                </div>
+            </div>
+        }
+        <!--
+        <div class="mb-3 image-upload-prev">
+            <div class="image-upload">
+                <div class="form-field-plain">
+                    <label asp-for="Image" class="form-label">Image</label>
+                    <input asp-for="Image" class="form-control" type="file" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="image-preview">
+                <div class="preview-img">
+                    <span class="no-image-selected">Image Preview</span>
+                </div>
+            </div>
+        </div>
+        -->
+        <div class="form-buttons">
+            <button type="button" onclick="history.back();">Cancel</button>
+            <button type="submit">Update</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/image-preview.js"></script>
+}

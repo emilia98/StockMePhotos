@@ -14,17 +14,17 @@ namespace StockMePhotos.Services.Core
             this.dbContext = dbContext;
         }
 
-        public async Task AddCategoryToPhotoAsync(Guid photoId, int categoryId)
+        public async Task AddCategoryToPhotoAsync(string photoId, int categoryId)
         {
             bool photoCategoryExists = await this.dbContext
                 .PhotosCategories
-                .AnyAsync(pc => pc.PhotoId == photoId && pc.CategoryId == categoryId);
+                .AnyAsync(pc => pc.PhotoId.ToString().ToLower() == photoId.ToLower() && pc.CategoryId == categoryId);
 
             if (photoCategoryExists) return;
 
             PhotoCategory newPhotoCategory = new PhotoCategory()
             {
-                PhotoId = photoId,
+                PhotoId = Guid.Parse(photoId),
                 CategoryId = categoryId
             };
 
