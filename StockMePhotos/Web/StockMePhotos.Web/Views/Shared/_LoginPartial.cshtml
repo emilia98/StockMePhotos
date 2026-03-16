@@ -21,6 +21,9 @@
                     <a class="dropdown-item text-dark" asp-controller="Photo" asp-action="MyPhotos" asp-route-username="@UserManager.GetUserName(User)!">My Photos</a>
                 </li>
                 <li>
+                    <a class="dropdown-item text-dark" asp-controller="Photo" asp-action="Favorites" asp-route-username="@UserManager.GetUserName(User)!">Favorites</a>
+                </li>
+                <li>
                     <hr class="dropdown-divider">
                 </li>
                 <li>

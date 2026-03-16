@@ -1,21 +1,37 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using StockMePhotos.Services.Core.Interfaces;
+using StockMePhotos.ViewModels.Home;
+using StockMePhotos.ViewModels.Photo;
 using StockMePhotos.Web.Models;
+using System.Diagnostics;
 
 namespace StockMePhotos.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPhotoService photoService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            IPhotoService photoService,
+            ILogger<HomeController> logger)
         {
+            this.photoService = photoService;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<PhotoViewModel> topPhotos = await this.photoService
+                .GetTopPhotos(3);
+            IEnumerable<PhotoViewModel> latestPhotos = await this.photoService
+                .GetLatestPhotos(3);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                TopPhotos = topPhotos,
+                LatestPhotos = latestPhotos
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

@@ -45,6 +45,48 @@ nav ul.cm-navbar a.btn-custom {
     padding: .275rem .5rem;
 }
 
+/* HOME PAGE */
+div.index-photo-list h2 {
+    margin: 30px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: var(--main-color);
+}
+
+div.index-list hr {
+    margin: 50px 0;
+}
+
+div.custom-j-title {
+    margin: 75px 0;
+}
+
+div.custom-j-title h1 {
+    font-size: 5rem;
+    letter-spacing: 3px;
+    color: var(--main-color);
+    text-transform: uppercase;
+}
+
+div.custom-j-title p {
+    color: gray;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+div.photos-container div.photos-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+/* HOME PAGE */
+
 div.page-content {
     margin: 30px 0;
 }
@@ -190,7 +232,7 @@ div.photos-container div.photos-list {
 
         div.photos-container div.photos-list div.photo-card div.photo-categories {
             padding: 5px;
-            background: green;
+            background: var(--main-color);
             margin: 5px 0;
             color: white;
             text-transform: uppercase;

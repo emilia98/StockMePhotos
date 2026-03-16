@@ -10,6 +10,8 @@
 
         public string? ImageURL { get; set; }
 
+        public int? ToFavoritesCount { get; set; }
+
         public IEnumerable<string> Categories { get; set; } = new List<string>();
     }
 }

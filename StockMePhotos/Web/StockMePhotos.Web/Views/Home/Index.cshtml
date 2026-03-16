@@ -1,8 +1,63 @@
-﻿@{
+﻿@using StockMePhotos.ViewModels.Home;
+@model IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center custom-j-title">
+    <h1 class="display-6">Welcome</h1>
+    <p>Explore large library with photos.</p>
+</div>
+
+<div class="photos-container index-list">
+    <div class="index-photo-list">
+        <h2>Top Photos</h2>
+        <div class="photos-list">
+            @foreach (PhotoViewModel photo in Model.TopPhotos)
+            {
+                <div class="photo-card">
+                    <div class="photo-title">@photo.Title</div>
+                    <div class="photo-src">
+                        <a asp-controller="Photo" asp-action="Details" asp-route-id="@photo.Id">
+                            <img src="@photo.ImageURL" />
+                        </a>
+                    </div>
+                    <div class="photo-categories">
+                        @foreach (string category in photo.Categories)
+                        {
+                            <span>@category</span>
+                        }
+                    </div>
+                    <div class="">In Favorites: <span class="badge rounded-pill bg-dark">@photo.ToFavoritesCount</span></div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="index-photo-list">
+        <h2>Latest Photos</h2>
+        <div class="photos-list">
+            @foreach (PhotoViewModel photo in Model.LatestPhotos)
+            {
+                <div class="photo-card">
+                    <div class="photo-title">@photo.Title</div>
+                    <div class="photo-src">
+                        <a asp-controller="Photo" asp-action="Details" asp-route-id="@photo.Id">
+                            <img src="@photo.ImageURL" />
+                        </a>
+                    </div>
+                    <div class="photo-categories">
+                        @foreach (string category in photo.Categories)
+                        {
+                            <span>@category</span>
+                        }
+                    </div>
+                    <div class="">In Favorites: <span class="badge rounded-pill bg-dark">@photo.ToFavoritesCount</span></div>
+                </div>
+            }
+        </div>
+    </div>
+
 </div>

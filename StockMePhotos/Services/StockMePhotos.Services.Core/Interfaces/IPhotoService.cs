@@ -8,7 +8,9 @@ namespace StockMePhotos.Services.Core.Interfaces
 
         Task<IEnumerable<PhotoViewModel>> GetAll();
 
-        // Task<PhotoDetailsViewModel?> GetDetails(string id);
+        Task<IEnumerable<PhotoViewModel>> GetTopPhotos(int count);
+
+        Task<IEnumerable<PhotoViewModel>> GetLatestPhotos(int count);
 
         Task<Guid> AddNewPhoto(AddPhotoInputModel inputModel, string userId);
 

@@ -185,6 +185,49 @@ namespace StockMePhotos.Services.Core
             return photoEntity?.UserId;
         }
 
+        public async Task<IEnumerable<PhotoViewModel>> GetTopPhotos(int count)
+        {
+            return await this.dbContext.Photos
+                .AsNoTracking()
+                .Where(p => p.IsDeleted == false)
+                .Include(p => p.PhotoUpload)
+                .Include(p => p.PhotoCategories)
+                .Include(p => p.ToFavorites)
+                .OrderByDescending(p => p.ToFavorites.Count())
+                .Select(p => new PhotoViewModel
+                {
+                    Id = p.Id.ToString(),
+                    Title = p.Title,
+                    ImageURL = p.PhotoUpload.ImageURL,
+                    DateAdded = p.DateAdded.ToString("dd/MM/yyyy"),
+                    Categories = p.PhotoCategories.Select(c => c.Category.Name),
+                    ToFavoritesCount = p.ToFavorites.Count()
+                })
+                .Take(count)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<PhotoViewModel>> GetLatestPhotos(int count)
+        {
+            return await this.dbContext.Photos
+                .AsNoTracking()
+                .Where(p => p.IsDeleted == false)
+                .Include(p => p.PhotoUpload)
+                .Include(p => p.PhotoCategories)
+                .OrderByDescending(p => p.DateAdded)
+                .Select(p => new PhotoViewModel
+                {
+                    Id = p.Id.ToString(),
+                    Title = p.Title,
+                    ImageURL = p.PhotoUpload.ImageURL,
+                    DateAdded = p.DateAdded.ToString("dd/MM/yyyy"),
+                    Categories = p.PhotoCategories.Select(c => c.Category.Name),
+                    ToFavoritesCount = p.ToFavorites.Count()
+                })
+                .Take(count)
+                .ToListAsync();
+        }
+
         private async Task<Photo?> GetPhotoEntityById(string id)
         {
             Photo? photoEntity = await this.dbContext.Photos
