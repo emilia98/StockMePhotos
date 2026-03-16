@@ -48,6 +48,28 @@ namespace StockMePhotos.Services.Core
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<PhotoViewModel>> GetAllPhotosByUserAsync(string userId)
+        {
+            IEnumerable<PhotoViewModel> photosByUser = await this.dbContext
+                .Photos
+                .AsNoTracking()
+                .Include(p => p.PhotoUpload)
+                .Include(p => p.PhotoCategories)
+                .Where(p => p.UserId == userId)
+                .OrderByDescending(p => p.DateAdded)
+                .Select(p => new PhotoViewModel
+                {
+                    Id = p.Id.ToString(),
+                    Title = p.Title,
+                    ImageURL = p.PhotoUpload.ImageURL,
+                    DateAdded = p.DateAdded.ToString("dd/MM/yyyy"),
+                    Categories = p.PhotoCategories.Select(c => c.Category.Name)
+                })
+                .ToListAsync();
+
+            return photosByUser;
+        }
+
         public async Task<PhotoViewModel?> GetById(string id)
         {
             Photo? photoEntity = await this.GetPhotoEntityById(id);

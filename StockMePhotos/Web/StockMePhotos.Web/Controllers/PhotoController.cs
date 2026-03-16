@@ -95,5 +95,19 @@ namespace StockMePhotos.Web.Controllers
             return this.RedirectToAction(nameof(Index));
 
         }
+
+        [HttpGet]
+        [Route("Photo/My")]
+        [Authorize]
+        public async Task<IActionResult> MyPhotos()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            IEnumerable<PhotoViewModel> photosByUser = await this.photoService.GetAllPhotosByUserAsync(userId);
+            MyPhotosListViewModel viewModel = new MyPhotosListViewModel()
+            {
+                AllPhotos = photosByUser
+            };
+            return View(viewModel);
+        }
     }
 }

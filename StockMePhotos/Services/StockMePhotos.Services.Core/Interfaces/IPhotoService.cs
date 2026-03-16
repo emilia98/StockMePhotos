@@ -11,5 +11,7 @@ namespace StockMePhotos.Services.Core.Interfaces
         // Task<PhotoDetailsViewModel?> GetDetails(string id);
 
         Task<Guid> AddNewPhoto(AddPhotoInputModel inputModel, string userId);
+
+        Task<IEnumerable<PhotoViewModel>> GetAllPhotosByUserAsync(string userId);
     }
 }
