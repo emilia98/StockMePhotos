@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\StockMePhotos.Data\StockMePhotos.Data.csproj" />
+    <ProjectReference Include="..\..\Services\StockMePhotos.Services.Common\StockMePhotos.Services.Common.csproj" />
     <ProjectReference Include="..\..\Services\StockMePhotos.Services.Core\StockMePhotos.Services.Core.csproj" />
     <ProjectReference Include="..\StockMePhotos.ViewModels\StockMePhotos.ViewModels.csproj" />
   </ItemGroup>

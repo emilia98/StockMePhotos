@@ -15,7 +15,7 @@ namespace StockMePhotos.Services.Core
             this.dbContext = dbContext;
         }
 
-        public async Task AddNewPhoto(AddPhotoInputModel inputModel, string userId)
+        public async Task<Guid> AddNewPhoto(AddPhotoInputModel inputModel, string userId)
         {
             Photo photoEntity = new Photo()
             {
@@ -27,6 +27,8 @@ namespace StockMePhotos.Services.Core
 
             await this.dbContext.Photos.AddAsync(photoEntity);
             await this.dbContext.SaveChangesAsync();
+
+            return photoEntity.Id;
         }
 
         public async Task<IEnumerable<PhotoViewModel>> GetAll()

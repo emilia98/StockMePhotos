@@ -10,6 +10,6 @@ namespace StockMePhotos.Services.Core.Interfaces
 
         // Task<PhotoDetailsViewModel?> GetDetails(string id);
 
-        Task AddNewPhoto(AddPhotoInputModel inputModel, string userId);
+        Task<Guid> AddNewPhoto(AddPhotoInputModel inputModel, string userId);
     }
 }
