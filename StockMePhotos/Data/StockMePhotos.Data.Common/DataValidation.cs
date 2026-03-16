@@ -32,7 +32,7 @@
 
         public static class PhotoUpload
         {
-            public const int ImageURLMaxLength = 100;
+            public const int ImageURLMaxLength = 200;
         }
     }
 }

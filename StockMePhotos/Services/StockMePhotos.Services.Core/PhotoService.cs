@@ -27,7 +27,6 @@ namespace StockMePhotos.Services.Core
 
             await this.dbContext.Photos.AddAsync(photoEntity);
             await this.dbContext.SaveChangesAsync();
-
             return photoEntity.Id;
         }
 

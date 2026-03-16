@@ -13,6 +13,7 @@ namespace StockMePhotos.Web.Controllers
     {
         private readonly IPhotoService photoService;
         private readonly ICategoryService categoryService;
+        private readonly IPhotoUploadService photoUploadService;
         private readonly IPhotoCategoryService photoCategoryService;
         private readonly CloudinaryService cloudinaryService;
 
@@ -20,11 +21,13 @@ namespace StockMePhotos.Web.Controllers
         public PhotoController(
             IPhotoService photoService,
             ICategoryService categoryService,
+            IPhotoUploadService photoUploadService,
             IPhotoCategoryService photoCategoryService,
             CloudinaryService cloudinaryService)
         {
             this.photoService = photoService;
             this.categoryService = categoryService;
+            this.photoUploadService = photoUploadService;
             this.photoCategoryService = photoCategoryService;
             this.cloudinaryService = cloudinaryService;
         }
@@ -79,6 +82,7 @@ namespace StockMePhotos.Web.Controllers
                 Guid photoId = await this.photoService.AddNewPhoto(inputModel, userId);
                 await this.photoCategoryService.AddCategoryToPhotoAsync(photoId, categoryId);
                 string uploadImageUrl = await this.cloudinaryService.UploadImageAsync(image!);
+                await this.photoUploadService.AddPhotoUploadAsync(photoId, uploadImageUrl);
             }
             catch (Exception e)
             {
