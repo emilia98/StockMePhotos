@@ -9,7 +9,7 @@ using static StockMePhotos.GCommon.ValidationMessages.Photo;
 
 namespace StockMePhotos.Web.Controllers
 {
-    public class PhotoController : Controller
+    public class PhotoController : BaseController
     {
         private readonly IPhotoService photoService;
         private readonly ICategoryService categoryService;
@@ -35,6 +35,7 @@ namespace StockMePhotos.Web.Controllers
             this.cloudinaryService = cloudinaryService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             IEnumerable<PhotoViewModel> viewModel = await this.photoService
@@ -42,6 +43,7 @@ namespace StockMePhotos.Web.Controllers
             return View(viewModel);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Details(string? id)
         {
@@ -50,7 +52,7 @@ namespace StockMePhotos.Web.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? userId = GetUserId();
             PhotoDetailsViewModel? viewModel = await this.photoService.GetDetails(id, userId);
             if (viewModel == null)
             {
@@ -61,7 +63,6 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Add()
         {
             AddPhotoInputModel inputModel = new AddPhotoInputModel();
@@ -70,7 +71,6 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Add(AddPhotoInputModel inputModel)
         {
             inputModel.Categories = await this.categoryService.ListAllCategories();
@@ -87,7 +87,7 @@ namespace StockMePhotos.Web.Controllers
                 return View(inputModel);
             }
 
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
 
             IFormFile? image = inputModel.Image;
             string? imageError = null;
@@ -118,10 +118,9 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
             string? creatorId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
 
             if (string.IsNullOrEmpty(creatorId) || userId != creatorId)
@@ -151,7 +150,6 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             UpdatePhotoInputModel? inputModel = await this.photoService.GetEntityToUpdateByIdAsync(id);
@@ -160,7 +158,7 @@ namespace StockMePhotos.Web.Controllers
                 return RedirectToAction(nameof(MyPhotos));
             }
 
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? userId = GetUserId();
             string creatorId = inputModel.UserId;
 
             // If the current user is not the creator
@@ -174,7 +172,6 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Edit(string id, UpdatePhotoInputModel inputModel)
         {
             UpdatePhotoInputModel? oldInputModel = await this.photoService.GetEntityToUpdateByIdAsync(id);
@@ -183,7 +180,7 @@ namespace StockMePhotos.Web.Controllers
                 return RedirectToAction(nameof(MyPhotos));
             }
 
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
             // string? ownerId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
             string? ownerId = oldInputModel!.UserId;
             if (ownerId == null || ownerId != userId)
@@ -244,10 +241,9 @@ namespace StockMePhotos.Web.Controllers
 
         [HttpGet]
         [Route("Photo/My")]
-        [Authorize]
         public async Task<IActionResult> MyPhotos()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
             IEnumerable<PhotoViewModel> photosByUser = await this.photoService.GetAllPhotosByUserAsync(userId);
             MyPhotosListViewModel viewModel = new MyPhotosListViewModel()
             {
@@ -257,10 +253,9 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> AddToFavorites(string id)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
             string? ownerId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
 
             if (ownerId == null)
@@ -286,10 +281,9 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> RemoveFromFavorites(string id)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
             string? ownerId = await this.photoService.GetPhotoOwnerByPhotoIdAsync(id);
 
             if (ownerId == null)
@@ -315,10 +309,9 @@ namespace StockMePhotos.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Favorites()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = GetUserId()!;
             IEnumerable<PhotoViewModel> favoritePhotosByUser = await this.favoritePhotoService.GetAllFavoritePhotosByUserAsync(userId);
             MyPhotosListViewModel viewModel = new MyPhotosListViewModel()
             {

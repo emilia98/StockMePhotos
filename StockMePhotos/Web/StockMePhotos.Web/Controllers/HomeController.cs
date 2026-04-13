@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Home;
@@ -7,7 +8,7 @@ using System.Diagnostics;
 
 namespace StockMePhotos.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IPhotoService photoService;
         private readonly ILogger<HomeController> _logger;
@@ -20,6 +21,7 @@ namespace StockMePhotos.Web.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             IEnumerable<PhotoViewModel> topPhotos = await this.photoService
@@ -34,11 +36,13 @@ namespace StockMePhotos.Web.Controllers
             return View(viewModel);
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
