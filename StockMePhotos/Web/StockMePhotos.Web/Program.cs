@@ -26,7 +26,10 @@ namespace StockMePhotos.Web
             });
 
             builder.Services
-                 .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                 .AddDefaultIdentity<IdentityUser>(options =>
+                 {
+                     ConfigureIdentityOptions(builder.Configuration, options);
+                 })
                  .AddEntityFrameworkStores<StockMePhotosDbContext>()
                  .AddDefaultTokenProviders()
                  .AddDefaultUI();
@@ -67,6 +70,30 @@ namespace StockMePhotos.Web
             app.MapRazorPages();
 
             app.Run();
+        }
+
+        private static void ConfigureIdentityOptions(ConfigurationManager configuration,
+           IdentityOptions options)
+        {
+            options.SignIn.RequireConfirmedAccount = configuration
+                .GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+            options.SignIn.RequireConfirmedEmail = configuration
+                .GetValue<bool>("Identity:SignIn:RequireConfirmedEmail");
+            options.SignIn.RequireConfirmedPhoneNumber = configuration
+                .GetValue<bool>("Identity:SignIn:RequireConfirmedPhoneNumber");
+
+            options.Password.RequireDigit = configuration
+                .GetValue<bool>("Identity:Password:RequireDigit");
+            options.Password.RequiredLength = configuration
+                .GetValue<int>("Identity:Password:RequiredLength");
+            options.Password.RequiredUniqueChars = configuration
+                .GetValue<int>("Identity:Password:RequiredUniqueChars");
+            options.Password.RequireNonAlphanumeric = configuration
+                .GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+            options.Password.RequireUppercase = configuration
+                .GetValue<bool>("Identity:Password:RequireUppercase");
+            options.Password.RequireLowercase = configuration
+                .GetValue<bool>("Identity:Password:RequireLowercase");
         }
     }
 }
