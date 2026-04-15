@@ -25,6 +25,8 @@ namespace StockMePhotos.Data
 
         public virtual DbSet<FavoritePhoto> FavoritePhotos { get; set; } = null!;
 
+        public virtual DbSet<PhotoTag> PhotosTags { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
