@@ -68,6 +68,36 @@ namespace StockMePhotos.Data.Configurations
                 Name = "Urban",
                 Slug = "urban"
             },
+            new Tag
+            {
+                Id = 11,
+                Name = "Animal",
+                Slug = "animal"
+            },
+            new Tag
+            {
+                Id = 12,
+                Name = "Nature",
+                Slug = "nature"
+            },
+            new Tag
+            {
+                Id = 13,
+                Name = "Architecture",
+                Slug = "architecture"
+            },
+            new Tag
+            {
+                Id = 14,
+                Name = "Stadium",
+                Slug = "stadium"
+            },
+            new Tag
+            {
+                Id = 15,
+                Name = "Landscape",
+                Slug = "landscape"
+            }
         };
 
         public void Configure(EntityTypeBuilder<Tag> entity)
