@@ -14,7 +14,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Lion in the Wild",
                 Slug = "lion-in-the-wild",
                 Description = "Majestic lion resting in golden savannah grass.",
-                UserId = "75e1fd93-5f2d-4e72-8900-6ab9ed9ae323"
+                UserId = Guid.Parse("75e1fd93-5f2d-4e72-8900-6ab9ed9ae323")
             },
             new Photo
             {
@@ -22,7 +22,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Running Horse",
                 Slug = "running-horse",
                 Description = "Wild horse running freely across open fields.",
-                UserId = "97dfe4b4-8f5b-4a44-971d-6f62037bcde5"
+                UserId = Guid.Parse("97dfe4b4-8f5b-4a44-971d-6f62037bcde5")
             },
             new Photo
             {
@@ -30,7 +30,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Mountain River",
                 Slug = "mountain-river",
                 Description = "Clear river flowing between rocks and pine trees.",
-                UserId = "97dfe4b4-8f5b-4a44-971d-6f62037bcde5"
+                UserId = Guid.Parse("97dfe4b4-8f5b-4a44-971d-6f62037bcde5")
             },
             new Photo
             {
@@ -38,7 +38,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Modern Glass Skyscraper",
                 Slug = "modern-glass-skyscraper",
                 Description = "modern-glass-skyscraper",
-                UserId = "97dfe4b4-8f5b-4a44-971d-6f62037bcde5"
+                UserId = Guid.Parse("97dfe4b4-8f5b-4a44-971d-6f62037bcde5")
             },
             new Photo
             {
@@ -46,7 +46,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Historic Stone Bridge",
                 Slug = "historic-stone-bridge",
                 Description = "Old arched bridge crossing a calm river.",
-                UserId = "0bb23ace-c418-4314-b8bb-09b3aeb9ab07"
+                UserId = Guid.Parse("0bb23ace-c418-4314-b8bb-09b3aeb9ab07")
             },
             new Photo
             {
@@ -54,7 +54,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Eagle in Flight",
                 Slug = "eagle-in-flight",
                 Description = "Powerful eagle soaring high above the mountains.",
-                UserId = "75e1fd93-5f2d-4e72-8900-6ab9ed9ae323"
+                UserId = Guid.Parse("75e1fd93-5f2d-4e72-8900-6ab9ed9ae323")
             },
             new Photo
             {
@@ -62,7 +62,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Football Stadium Crowd",
                 Slug = "football-stadium-crowd",
                 Description = "Fans cheering inside a packed football stadium.",
-                 UserId = "97dfe4b4-8f5b-4a44-971d-6f62037bcde5"
+                UserId = Guid.Parse("97dfe4b4-8f5b-4a44-971d-6f62037bcde5")
             },
             new Photo
             {
@@ -70,7 +70,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Traditional Wooden Pagoda",
                 Slug = "traditional-wooden-pagoda",
                 Description = "Multi-level pagoda surrounded by autumn trees.",
-                UserId = "0bb23ace-c418-4314-b8bb-09b3aeb9ab07"
+                UserId = Guid.Parse("0bb23ace-c418-4314-b8bb-09b3aeb9ab07")
             },
             new Photo
             {
@@ -78,7 +78,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Ancient Temple Ruins",
                 Slug = "ancient-temple-ruins",
                 Description = "Stone temple remains surrounded by jungle.",
-                UserId = "0bb23ace-c418-4314-b8bb-09b3aeb9ab07"
+                UserId = Guid.Parse("0bb23ace-c418-4314-b8bb-09b3aeb9ab07")
             },
             new Photo
             {
@@ -86,7 +86,7 @@ namespace StockMePhotos.Data.Configurations
                 Title = "Snowy Mountain Peak",
                 Slug = "snowy-mountain-peak",
                 Description = "Sharp snowy mountain under a clear sky.",
-                UserId = "75e1fd93-5f2d-4e72-8900-6ab9ed9ae323"
+                UserId = Guid.Parse("75e1fd93-5f2d-4e72-8900-6ab9ed9ae323")
             },
         };
 

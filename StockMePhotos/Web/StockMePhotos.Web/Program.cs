@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
+using StockMePhotos.Data.Models;
 using StockMePhotos.GCommon;
 using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Core;
@@ -26,10 +27,11 @@ namespace StockMePhotos.Web
             });
 
             builder.Services
-                 .AddDefaultIdentity<IdentityUser>(options =>
+                 .AddDefaultIdentity<ApplicationUser>(options =>
                  {
                      ConfigureIdentityOptions(builder.Configuration, options);
                  })
+                 .AddRoles<IdentityRole<Guid>>()
                  .AddEntityFrameworkStores<StockMePhotosDbContext>()
                  .AddDefaultTokenProviders()
                  .AddDefaultUI();

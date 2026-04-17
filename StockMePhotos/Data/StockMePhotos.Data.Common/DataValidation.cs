@@ -34,5 +34,11 @@
         {
             public const int ImageURLMaxLength = 200;
         }
+
+        public static class ApplicationUser
+        {
+            public const int FirstNameMaxLength = 30;
+            public const int LastNameMaxLength = 30;
+        }
     }
 }

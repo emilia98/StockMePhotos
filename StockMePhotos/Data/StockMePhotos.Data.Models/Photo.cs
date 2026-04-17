@@ -30,11 +30,11 @@ namespace StockMePhotos.Data.Models
 
         // UserId
         [Required]
-        [ForeignKey(nameof(IdentityUser))]
-        public string UserId { get; set; } = null!;
+        [ForeignKey(nameof(User))]
+        public Guid UserId { get; set; }
 
         // IdentityUser
-        public virtual IdentityUser User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
 
         // PhotoUploadId?
         // [ForeignKey(nameof(PhotoUpload))]
