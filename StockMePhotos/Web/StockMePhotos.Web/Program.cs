@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
 using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Seeding;
+using StockMePhotos.Data.Seeding.Contracts;
 using StockMePhotos.GCommon;
 using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Core;
 using StockMePhotos.Services.Core.Interfaces;
+using StockMePhotos.Web.Infrastructure;
 
 namespace StockMePhotos.Web
 {
@@ -42,6 +45,8 @@ namespace StockMePhotos.Web
             builder.Services.AddScoped<IPhotoCategoryService, PhotoCategoryService>();
             builder.Services.AddScoped<IFavoritePhotoService, FavoritePhotoService>();
 
+            builder.Services.AddTransient<IRolesSeeder, RolesSeeder>();
+
             /* Cloudinary */
             builder.Services.Configure<CloudinarySettings>(
                 builder.Configuration.GetSection("Cloudinary")
@@ -65,6 +70,8 @@ namespace StockMePhotos.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseRolesSeeder();
 
             app.MapControllerRoute(
                 name: "default",

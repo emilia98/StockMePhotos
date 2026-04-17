@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Web\StockMePhotos.GCommon\StockMePhotos.GCommon.csproj" />
     <ProjectReference Include="..\StockMePhotos.Data.Models\StockMePhotos.Data.Models.csproj" />
   </ItemGroup>
 
