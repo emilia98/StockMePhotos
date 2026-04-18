@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Error 400 - Bad Request";
+}
+
+<div class="container d-flex align-items-center justify-content-center error-container">
+    <div class="text-center">
+        <div class="error-code text-danger">400</div>
+        <h1 class="mb-3">Bad Request</h1>
+        <p class="error-text text-muted mb-4">
+            The request could not be understood by the server. Please check your input and try again.
+        </p>
+        <a href="@(Url.Action("Index", "Home"))" class="btn btn-primary btn-lg btn-custom">Go Home</a>
+    </div>
+</div>

@@ -377,3 +377,27 @@ div.photo-details-container div.actions {
 }
 
 /* PHOTO DETAILS */
+
+
+/* Error Pages */
+
+.error-container {
+    height: 80vh;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 700;
+}
+
+.error-text {
+    font-size: 1.5rem;
+}
+
+a.btn-custom {
+    background: var(--main-color);
+    border-color: var(--main-color);
+    color: #FFF;
+}
+
+/* Error Pages */

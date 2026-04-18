@@ -76,6 +76,8 @@ namespace StockMePhotos.Web
 
             app.UseIdentitySeeder();
 
+            app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
