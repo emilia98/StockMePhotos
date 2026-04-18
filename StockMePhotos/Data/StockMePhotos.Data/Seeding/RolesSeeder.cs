@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using StockMePhotos.Data.Seeding.Contracts;
 using static StockMePhotos.GCommon.ExceptionMessages.Identity;
+using static StockMePhotos.GCommon.GlobalSettings;
 
 namespace StockMePhotos.Data.Seeding
 {
@@ -8,8 +9,8 @@ namespace StockMePhotos.Data.Seeding
     {
         private readonly string[] ApplicationRoles = new string[]
         {
-            "Admin",
-            "Editor"
+            AdminRoleName,
+            EditorRoleName
         };
 
         private readonly RoleManager<IdentityRole<Guid>> roleManager;

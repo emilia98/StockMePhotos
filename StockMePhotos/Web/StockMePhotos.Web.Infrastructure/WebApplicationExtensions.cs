@@ -6,18 +6,17 @@ namespace StockMePhotos.Web.Infrastructure
 {
     public static class WebApplicationExtensions
     {
-        public static IApplicationBuilder UseRolesSeeder(this IApplicationBuilder applicationBuilder)
+        public static IApplicationBuilder UseIdentitySeeder(this IApplicationBuilder applicationBuilder)
         {
             using IServiceScope scope = applicationBuilder
                 .ApplicationServices
                 .CreateScope();
 
-            IRolesSeeder rolesSeeder = scope
-                .ServiceProvider
-                .GetRequiredService<IRolesSeeder>();
+            IIdentitySeeder identitySeeder = scope.ServiceProvider
+               .GetRequiredService<IIdentitySeeder>();
 
-            rolesSeeder
-                .SeedRolesAsync()
+            identitySeeder
+                .SeedAsync()
                 .GetAwaiter()
                 .GetResult();
 

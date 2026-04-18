@@ -46,6 +46,9 @@ namespace StockMePhotos.Web
             builder.Services.AddScoped<IFavoritePhotoService, FavoritePhotoService>();
 
             builder.Services.AddTransient<IRolesSeeder, RolesSeeder>();
+            builder.Services.AddTransient<IUsersSeeder, UsersSeeder>();
+            builder.Services.AddTransient<IUsersToRolesSeeder, UsersToRolesSeeder>();
+            builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
             /* Cloudinary */
             builder.Services.Configure<CloudinarySettings>(
@@ -71,7 +74,7 @@ namespace StockMePhotos.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseRolesSeeder();
+            app.UseIdentitySeeder();
 
             app.MapControllerRoute(
                 name: "default",
