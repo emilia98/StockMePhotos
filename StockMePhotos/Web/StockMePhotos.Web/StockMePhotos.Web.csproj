@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Services\StockMePhotos.Services.Common\StockMePhotos.Services.Common.csproj" />
     <ProjectReference Include="..\..\Services\StockMePhotos.Services.Core\StockMePhotos.Services.Core.csproj" />
     <ProjectReference Include="..\StockMePhotos.ViewModels\StockMePhotos.ViewModels.csproj" />
+    <ProjectReference Include="..\StockMePhotos.Web.Infrastructure\StockMePhotos.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

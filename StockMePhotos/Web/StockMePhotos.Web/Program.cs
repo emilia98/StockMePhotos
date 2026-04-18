@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
+using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Seeding;
+using StockMePhotos.Data.Seeding.Contracts;
 using StockMePhotos.GCommon;
 using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Core;
 using StockMePhotos.Services.Core.Interfaces;
+using StockMePhotos.Web.Infrastructure;
 
 namespace StockMePhotos.Web
 {
@@ -26,10 +30,11 @@ namespace StockMePhotos.Web
             });
 
             builder.Services
-                 .AddDefaultIdentity<IdentityUser>(options =>
+                 .AddDefaultIdentity<ApplicationUser>(options =>
                  {
                      ConfigureIdentityOptions(builder.Configuration, options);
                  })
+                 .AddRoles<IdentityRole<Guid>>()
                  .AddEntityFrameworkStores<StockMePhotosDbContext>()
                  .AddDefaultTokenProviders()
                  .AddDefaultUI();
@@ -39,6 +44,11 @@ namespace StockMePhotos.Web
             builder.Services.AddScoped<IPhotoUploadService, PhotoUploadService>();
             builder.Services.AddScoped<IPhotoCategoryService, PhotoCategoryService>();
             builder.Services.AddScoped<IFavoritePhotoService, FavoritePhotoService>();
+
+            builder.Services.AddTransient<IRolesSeeder, RolesSeeder>();
+            builder.Services.AddTransient<IUsersSeeder, UsersSeeder>();
+            builder.Services.AddTransient<IUsersToRolesSeeder, UsersToRolesSeeder>();
+            builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
             /* Cloudinary */
             builder.Services.Configure<CloudinarySettings>(
@@ -63,6 +73,8 @@ namespace StockMePhotos.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseIdentitySeeder();
 
             app.MapControllerRoute(
                 name: "default",

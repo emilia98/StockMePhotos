@@ -23,7 +23,7 @@ namespace StockMePhotos.Services.Core
                 Title = inputModel.Title,
                 Slug = inputModel.Title,
                 Description = inputModel.Description,
-                UserId = userId
+                UserId = Guid.Parse(userId)
             };
 
             await this.dbContext.Photos.AddAsync(photoEntity);
@@ -72,7 +72,7 @@ namespace StockMePhotos.Services.Core
                 .AsNoTracking()
                 .Include(p => p.PhotoUpload)
                 .Include(p => p.PhotoCategories)
-                .Where(p => p.UserId == userId && p.IsDeleted == false)
+                .Where(p => p.UserId.ToString().ToLower() == userId.ToLower() && p.IsDeleted == false)
                 .OrderByDescending(p => p.DateAdded)
                 .Select(p => new PhotoViewModel
                 {
@@ -127,9 +127,9 @@ namespace StockMePhotos.Services.Core
                     Name = pc.Category.Name,
                 }) ?? new List<CategoryViewModel>(),
                 UserName = photoEntity.User?.UserName?.ToLower() ?? "default@user.com",
-                CreatorId = photoEntity.UserId,
-                IsOwner = photoEntity.UserId == currentUserId,
-                IsInFavoriteList = currentUserId != null ? photoEntity.ToFavorites.Any(fp => fp.UserId == currentUserId) : false
+                CreatorId = photoEntity.UserId.ToString(),
+                IsOwner = photoEntity.UserId.ToString().ToLower() == currentUserId?.ToLower(),
+                IsInFavoriteList = currentUserId != null ? photoEntity.ToFavorites.Any(fp => fp.UserId.ToString().ToLower() == currentUserId.ToLower()) : false
             };
 
             return viewModel;
@@ -150,7 +150,7 @@ namespace StockMePhotos.Services.Core
                 Description = photoEntity.Description,
                 CategoryId = photoEntity.PhotoCategories.FirstOrDefault()!.CategoryId,
                 ImageURL = photoEntity.PhotoUpload.ImageURL,
-                UserId = photoEntity.UserId
+                UserId = photoEntity.UserId.ToString()
             };
 
             return inputModel;
@@ -182,7 +182,7 @@ namespace StockMePhotos.Services.Core
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.Id.ToString().ToLower() == id.ToLower() && p.IsDeleted == false);
 
-            return photoEntity?.UserId;
+            return photoEntity?.UserId.ToString();
         }
 
         public async Task<IEnumerable<PhotoViewModel>> GetTopPhotos(int count)

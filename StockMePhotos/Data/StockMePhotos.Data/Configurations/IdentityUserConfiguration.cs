@@ -1,22 +1,23 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StockMePhotos.Data.Models;
 
 namespace StockMePhotos.Data.Configurations
 {
-    public class IdentityUserConfiguration : IEntityTypeConfiguration<IdentityUser>
+    public class IdentityUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
-        private readonly PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
+        private readonly PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
 
-        public void Configure(EntityTypeBuilder<IdentityUser> entity)
+        public void Configure(EntityTypeBuilder<ApplicationUser> entity)
         {
             entity
                 .HasData(SeedUsers());
         }
 
-        private IEnumerable<IdentityUser> SeedUsers()
+        private IEnumerable<ApplicationUser> SeedUsers()
         {
-            IEnumerable<IdentityUser> users = new List<IdentityUser>
+            IEnumerable<ApplicationUser> users = new List<ApplicationUser>
             {
                 CreateUser("0bb23ace-c418-4314-b8bb-09b3aeb9ab07", "user1", "user1@example.com", "user1.1234"),
                 CreateUser("97dfe4b4-8f5b-4a44-971d-6f62037bcde5", "emilia", "emilia@example.com", "emilia.1234"),
@@ -26,11 +27,11 @@ namespace StockMePhotos.Data.Configurations
             return users;
         }
 
-        private IdentityUser CreateUser(string id, string username, string email, string password)
+        private ApplicationUser CreateUser(string id, string username, string email, string password)
         {
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
-                Id = id,
+                Id = Guid.Parse(id),
                 UserName = username,
                 NormalizedUserName = email.ToUpper(),
                 Email = email,

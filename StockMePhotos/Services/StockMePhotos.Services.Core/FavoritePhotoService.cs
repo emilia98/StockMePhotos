@@ -20,14 +20,14 @@ namespace StockMePhotos.Services.Core
             bool doesPhotoExistInFavorites = await this.dbContext
                 .FavoritePhotos
                 .AnyAsync(fp => fp.Id.ToString().ToLower() == photoId.ToLower()
-                                && fp.UserId.ToLower() == userId.ToLower());
+                                && fp.UserId.ToString().ToLower() == userId.ToLower());
 
             if (!doesPhotoExistInFavorites)
             {
                 FavoritePhoto newFavoritePhoto = new FavoritePhoto
                 {
                     PhotoId = Guid.Parse(photoId),
-                    UserId = userId
+                    UserId = Guid.Parse(userId)
                 };
 
                 await this.dbContext.FavoritePhotos.AddAsync(newFavoritePhoto);
@@ -40,7 +40,7 @@ namespace StockMePhotos.Services.Core
             FavoritePhoto? favoritePhotoToRemove = await this.dbContext
                 .FavoritePhotos
                 .SingleOrDefaultAsync(fp => fp.PhotoId.ToString().ToLower() == photoId.ToLower()
-                                            && fp.UserId.ToLower() == userId.ToLower());
+                                            && fp.UserId.ToString().ToLower() == userId.ToLower());
 
             if (favoritePhotoToRemove != null)
             {
@@ -55,7 +55,7 @@ namespace StockMePhotos.Services.Core
                 .FavoritePhotos
                 .AsNoTracking()
                 .Include(fp => fp.Photo)
-                .Where(fp => fp.UserId.ToLower() == userId.ToLower())
+                .Where(fp => fp.UserId.ToString().ToLower() == userId.ToLower())
                 .OrderByDescending(fp => fp.Photo.DateAdded)
                 .Select(fp => new PhotoViewModel
                 {
