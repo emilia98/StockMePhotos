@@ -44,11 +44,16 @@ namespace StockMePhotos.Web
                  .AddDefaultTokenProviders()
                  .AddDefaultUI();
 
+            /*
             builder.Services.AddScoped<IPhotoService, PhotoService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IPhotoUploadService, PhotoUploadService>();
             builder.Services.AddScoped<IPhotoCategoryService, PhotoCategoryService>();
             builder.Services.AddScoped<IFavoritePhotoService, FavoritePhotoService>();
+            */
+
+            builder.Services.RegisterUserServices(typeof(PhotoService));
+            // builder.Services.RegisterRepositories(typeof(TagRepository));
 
             builder.Services.AddTransient<IRolesSeeder, RolesSeeder>();
             builder.Services.AddTransient<IUsersSeeder, UsersSeeder>();
