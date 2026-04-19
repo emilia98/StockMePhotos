@@ -1,24 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StockMePhotos.Data;
-using StockMePhotos.Data.Models;
+﻿using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Repositories.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 
 namespace StockMePhotos.Services.Core
 {
     public class PhotoCategoryService : IPhotoCategoryService
     {
-        private readonly StockMePhotosDbContext dbContext;
+        private readonly IPhotoCategoryRepository photoCategoryRepository;
 
-        public PhotoCategoryService(StockMePhotosDbContext dbContext)
+        public PhotoCategoryService(IPhotoCategoryRepository photoCategoryRepository)
         {
-            this.dbContext = dbContext;
+            this.photoCategoryRepository = photoCategoryRepository;
         }
 
         public async Task AddCategoryToPhotoAsync(string photoId, int categoryId)
         {
-            bool photoCategoryExists = await this.dbContext
-                .PhotosCategories
-                .AnyAsync(pc => pc.PhotoId.ToString().ToLower() == photoId.ToLower() && pc.CategoryId == categoryId);
+            bool photoCategoryExists = await photoCategoryRepository.CategoryAssignedToPhotoAsync(categoryId, photoId);
 
             if (photoCategoryExists) return;
 
@@ -28,19 +25,14 @@ namespace StockMePhotos.Services.Core
                 CategoryId = categoryId
             };
 
-            await this.dbContext.PhotosCategories.AddAsync(newPhotoCategory);
-            await this.dbContext.SaveChangesAsync();
+            await photoCategoryRepository.AddCategoryToPhotoAsync(newPhotoCategory);
         }
 
         public async Task RemoveCategoryFromPhotoAsync(string photoId)
         {
-            IEnumerable<PhotoCategory> photoCategoriesToRemove = await this.dbContext
-                .PhotosCategories
-                .Where(pc => pc.PhotoId.ToString().ToLower() == photoId.ToLower())
-                .ToListAsync();
+            IEnumerable<PhotoCategory> photoCategoriesToRemove = await photoCategoryRepository.GetAllCategoriesAssignedToPhoto(photoId);
 
-            this.dbContext.RemoveRange(photoCategoriesToRemove);
-            await this.dbContext.SaveChangesAsync();
+            await photoCategoryRepository.RemoveCategoryFromPhotoAsync(photoCategoriesToRemove);
         }
     }
 }
