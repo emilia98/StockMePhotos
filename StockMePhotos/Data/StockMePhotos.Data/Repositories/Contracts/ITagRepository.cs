@@ -1,0 +1,20 @@
+﻿using StockMePhotos.Data.Models;
+using System.Linq.Expressions;
+
+namespace StockMePhotos.Data.Repositories.Contracts
+{
+    public interface ITagRepository
+    {
+        IQueryable<Tag> GetAllTagsNoTracking();
+
+        Task<IEnumerable<Tag>> GetAllTagsAsync<TKey>(Expression<Func<Tag, TKey>> orderBy);
+
+        Task<bool> AddTagAsync(Tag tag);
+
+        Task<bool> DeleteTagAsync(Tag tag);
+
+        Task<bool> TagExistsAsync(string slug);
+
+        Task<Tag?> GetTagByIdAsync(int id);
+    }
+}

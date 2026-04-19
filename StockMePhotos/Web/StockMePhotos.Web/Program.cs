@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockMePhotos.Data;
 using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Repositories;
 using StockMePhotos.Data.Seeding;
 using StockMePhotos.Data.Seeding.Contracts;
 using StockMePhotos.GCommon;
@@ -53,7 +54,7 @@ namespace StockMePhotos.Web
             */
 
             builder.Services.RegisterUserServices(typeof(PhotoService));
-            // builder.Services.RegisterRepositories(typeof(TagRepository));
+            builder.Services.RegisterRepositories(typeof(TagRepository));
 
             builder.Services.AddTransient<IRolesSeeder, RolesSeeder>();
             builder.Services.AddTransient<IUsersSeeder, UsersSeeder>();
