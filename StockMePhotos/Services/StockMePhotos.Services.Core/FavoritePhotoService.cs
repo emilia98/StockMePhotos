@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StockMePhotos.Data;
-using StockMePhotos.Data.Models;
+﻿using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Repositories.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Photo;
 
@@ -8,19 +7,16 @@ namespace StockMePhotos.Services.Core
 {
     public class FavoritePhotoService : IFavoritePhotoService
     {
-        private readonly StockMePhotosDbContext dbContext;
+        private readonly IFavoritePhotoRepository favoritePhotoRepository;
 
-        public FavoritePhotoService(StockMePhotosDbContext dbContext)
+        public FavoritePhotoService(IFavoritePhotoRepository favoritePhotoRepository)
         {
-            this.dbContext = dbContext;
+            this.favoritePhotoRepository = favoritePhotoRepository;
         }
 
         public async Task AddPhotoToFavorites(string photoId, string userId)
         {
-            bool doesPhotoExistInFavorites = await this.dbContext
-                .FavoritePhotos
-                .AnyAsync(fp => fp.Id.ToString().ToLower() == photoId.ToLower()
-                                && fp.UserId.ToString().ToLower() == userId.ToLower());
+            bool doesPhotoExistInFavorites = await favoritePhotoRepository.DoesPhotoExistInFavoriteAsync(photoId, userId);
 
             if (!doesPhotoExistInFavorites)
             {
@@ -30,44 +26,33 @@ namespace StockMePhotos.Services.Core
                     UserId = Guid.Parse(userId)
                 };
 
-                await this.dbContext.FavoritePhotos.AddAsync(newFavoritePhoto);
-                await this.dbContext.SaveChangesAsync();
+                await favoritePhotoRepository.AddPhotoToFavoritesAsync(newFavoritePhoto);
             }
         }
 
         public async Task RemovePhotoFromFavorites(string photoId, string userId)
         {
-            FavoritePhoto? favoritePhotoToRemove = await this.dbContext
-                .FavoritePhotos
-                .SingleOrDefaultAsync(fp => fp.PhotoId.ToString().ToLower() == photoId.ToLower()
-                                            && fp.UserId.ToString().ToLower() == userId.ToLower());
+            FavoritePhoto? favoritePhotoToRemove = await favoritePhotoRepository.GetFavoritePhotoToRemoveAsync(photoId, userId);
 
             if (favoritePhotoToRemove != null)
             {
-                this.dbContext.FavoritePhotos.Remove(favoritePhotoToRemove);
-                await this.dbContext.SaveChangesAsync();
+                await favoritePhotoRepository.RemovePhotoFromFavoritesAsync(favoritePhotoToRemove);
             }
         }
 
         public async Task<IEnumerable<PhotoViewModel>> GetAllFavoritePhotosByUserAsync(string userId)
         {
-            IEnumerable<PhotoViewModel> favoritePhotosByUser = await this.dbContext
-                .FavoritePhotos
-                .AsNoTracking()
-                .Include(fp => fp.Photo)
-                .Where(fp => fp.UserId.ToString().ToLower() == userId.ToLower())
-                .OrderByDescending(fp => fp.Photo.DateAdded)
-                .Select(fp => new PhotoViewModel
-                {
-                    Id = fp.Photo.Id.ToString(),
-                    Title = fp.Photo.Title,
-                    ImageURL = fp.Photo.PhotoUpload.ImageURL,
-                    DateAdded = fp.Photo.DateAdded.ToString("dd/MM/yyyy"),
-                    Categories = fp.Photo.PhotoCategories.Select(c => c.Category.Name)
-                })
-                .ToListAsync();
+            IEnumerable<FavoritePhoto> favoritePhotosByUserFromDb = await favoritePhotoRepository
+                .GetFavoritePhotoByUserAsync(userId);
 
-            return favoritePhotosByUser;
+            return favoritePhotosByUserFromDb.Select(fp => new PhotoViewModel
+            {
+                Id = fp.Photo.Id.ToString(),
+                Title = fp.Photo.Title,
+                ImageURL = fp.Photo.PhotoUpload?.ImageURL,
+                DateAdded = fp.Photo.DateAdded.ToString("dd/MM/yyyy"),
+                Categories = fp.Photo.PhotoCategories.Select(c => c.Category.Name)
+            });
         }
 
     }
