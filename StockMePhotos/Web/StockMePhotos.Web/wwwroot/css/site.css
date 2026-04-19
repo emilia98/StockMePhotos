@@ -25,6 +25,10 @@ body {
     margin-bottom: 60px;
 }
 
+.text-custom {
+    color: var(--main-color) !important;
+}
+
 .navbar-brand {
     color: var(--main-color) !important;
     text-transform: lowercase;
@@ -401,3 +405,14 @@ a.btn-custom {
 }
 
 /* Error Pages */
+
+
+/* ADMIN DASHBOARD */
+h1.dashboard {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+
+/* ADMIN DASHBOARD */
