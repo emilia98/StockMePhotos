@@ -12,6 +12,8 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Data\StockMePhotos.Data.Common\StockMePhotos.Data.Common.csproj" />
+	  <ProjectReference Include="..\..\Services\StockMePhotos.Services.AutoMapping\StockMePhotos.Services.AutoMapping.csproj" />
+	  <ProjectReference Include="..\..\Services\StockMePhotos.Services.Models\StockMePhotos.Services.Models.csproj" />
 	  <ProjectReference Include="..\StockMePhotos.GCommon\StockMePhotos.GCommon.csproj" />
 	</ItemGroup>
 

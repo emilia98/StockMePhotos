@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Data\StockMePhotos.Data.Models\StockMePhotos.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\StockMePhotos.Data\StockMePhotos.Data.csproj" />
-    <ProjectReference Include="..\..\Web\StockMePhotos.ViewModels\StockMePhotos.ViewModels.csproj" />
     <ProjectReference Include="..\StockMePhotos.Services.AutoMapping\StockMePhotos.Services.AutoMapping.csproj" />
-    <ProjectReference Include="..\StockMePhotos.Services.Models\StockMePhotos.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>

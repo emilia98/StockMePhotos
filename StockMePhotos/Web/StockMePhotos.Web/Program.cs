@@ -5,10 +5,13 @@ using StockMePhotos.Data.Models;
 using StockMePhotos.Data.Seeding;
 using StockMePhotos.Data.Seeding.Contracts;
 using StockMePhotos.GCommon;
+using StockMePhotos.Services.AutoMapping;
 using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Core;
 using StockMePhotos.Services.Core.Interfaces;
+using StockMePhotos.Services.Models;
 using StockMePhotos.Web.Infrastructure;
+using StockMePhotos.Web.Models;
 
 namespace StockMePhotos.Web
 {
@@ -20,6 +23,8 @@ namespace StockMePhotos.Web
 
             string? connectionString = builder.Configuration
                 .GetConnectionString("DefaultDevConnection");
+
+            AutoMapperConfig.RegisterMappings(typeof(PhotosAllDto).Assembly, typeof(ErrorViewModel).Assembly);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -49,6 +54,8 @@ namespace StockMePhotos.Web
             builder.Services.AddTransient<IUsersSeeder, UsersSeeder>();
             builder.Services.AddTransient<IUsersToRolesSeeder, UsersToRolesSeeder>();
             builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
+
+            builder.Services.AddSingleton(AutoMapperConfig.MapperInstance);
 
             /* Cloudinary */
             builder.Services.Configure<CloudinarySettings>(
