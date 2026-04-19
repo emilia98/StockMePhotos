@@ -1,17 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StockMePhotos.Data;
-using StockMePhotos.Data.Models;
+﻿using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Repositories.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 
 namespace StockMePhotos.Services.Core
 {
     public class PhotoUploadService : IPhotoUploadService
     {
-        private readonly StockMePhotosDbContext dbContext;
+        private readonly IPhotoUploadRepository photoUploadRepository;
 
-        public PhotoUploadService(StockMePhotosDbContext dbContext)
+        public PhotoUploadService(IPhotoUploadRepository photoUploadRepository)
         {
-            this.dbContext = dbContext;
+            this.photoUploadRepository = photoUploadRepository;
         }
 
         public async Task AddPhotoUploadAsync(Guid photoId, string imageURL)
@@ -22,19 +21,16 @@ namespace StockMePhotos.Services.Core
                 ImageURL = imageURL
             };
 
-            await this.dbContext.PhotoUploads.AddAsync(newPhotoUpload);
-            await this.dbContext.SaveChangesAsync();
+            await photoUploadRepository.AddPhotoUploadAsync(newPhotoUpload);
         }
 
         public async Task RemovePhotoUploadAsync(string photoId)
         {
-            PhotoUpload? photoUpload = await this.dbContext.PhotoUploads
-                .FirstOrDefaultAsync(pu => pu.PhotoId.ToString().ToLower() == photoId.ToLower());
+            PhotoUpload? photoUpload = await photoUploadRepository.GetPhotoUploadByPhotoAsync(photoId);
 
             if (photoUpload != null)
             {
-                this.dbContext.PhotoUploads.Remove(photoUpload);
-                await this.dbContext.SaveChangesAsync();
+                await photoUploadRepository.DeletePhotoUploadAsync(photoUpload);
             }
         }
     }
