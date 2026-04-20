@@ -25,5 +25,33 @@ namespace StockMePhotos.Services.Core
                 Name = c.Name
             });
         }
+
+        public async Task<IEnumerable<CategoryViewModel>> GetAllCategoriesOrderedById()
+        {
+            IEnumerable<Category> allCategoriesFromDb = await categoryRepository
+                .GetAllCategoriesAsync(c => c.Id);
+
+            return allCategoriesFromDb.Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Slug = c.Slug,
+                PhotosCount = c.PhotoCategories.Count
+            });
+        }
+
+        public async Task<IEnumerable<CategoryViewModel>> GetAllCategoriesOrderedByName()
+        {
+            IEnumerable<Category> allCategoriesFromDb = await categoryRepository
+                .GetAllCategoriesAsync(t => t.Name);
+
+            return allCategoriesFromDb.Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Slug = c.Slug,
+                PhotosCount = c.PhotoCategories.Count
+            });
+        }
     }
 }
