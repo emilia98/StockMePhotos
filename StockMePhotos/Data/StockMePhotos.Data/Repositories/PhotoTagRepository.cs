@@ -10,6 +10,13 @@ namespace StockMePhotos.Data.Repositories
         {
         }
 
+        public async Task<PhotoTag?> GetPhotoTagByIds(string photoId, int tagId)
+        {
+            return await DbContext!
+                .PhotosTags
+                .FirstOrDefaultAsync(pt => pt.PhotoId.ToString().ToLower() == photoId.ToLower());
+        }
+
         public async Task<bool> AddTagToPhotoAsync(PhotoTag photoTag)
         {
             await DbContext!.PhotosTags.AddAsync(photoTag);
@@ -32,9 +39,9 @@ namespace StockMePhotos.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> RemoveTagFromPhotoAsync(IEnumerable<PhotoTag> photoTagsToRemove)
+        public async Task<bool> RemoveTagFromPhotoAsync(PhotoTag photoTagToRemove)
         {
-            DbContext!.RemoveRange(photoTagsToRemove);
+            DbContext!.Remove(photoTagToRemove);
             int resultCount = await SaveChangesAsync();
             return resultCount > 0;
         }

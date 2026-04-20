@@ -10,12 +10,14 @@ namespace StockMePhotos.Services.Core.Interfaces
 
         Task<bool> TagWithSlugExistsAsync(string slug);
 
-        Task<bool> CreateTagAsync(TagFormModel formModel, string slug);
+        Task<int> CreateTagAsync(string name, string slug);
 
         Task<bool> TagWithIdExistsAsync(int id);
 
         Task<bool> UpdateTagAsync(int tagId, string slug);
 
-        public Task<UpdateTagFormModel?> GetTagToUpdateByIdAsync(int tagId);
+        Task<UpdateTagFormModel?> GetTagToUpdateByIdAsync(int tagId);
+
+        Task<TagViewModel?> GetTagBySlugAsync(string slug);
     }
 }

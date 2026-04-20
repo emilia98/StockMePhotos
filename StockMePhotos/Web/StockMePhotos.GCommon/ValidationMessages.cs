@@ -41,6 +41,7 @@
             public const string CategoryRequired = "Category is required.";
             public const string CategoryNotFound = "The selected category is not found.";
             public const string ImageRequired = "The image is required.";
+            public const string TagsRules = "Tags should contain letters, numbers, '&', '.' and spaces.";
         }
 
         public static class Image

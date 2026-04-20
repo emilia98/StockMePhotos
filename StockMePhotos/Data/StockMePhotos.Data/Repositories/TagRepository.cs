@@ -12,12 +12,13 @@ namespace StockMePhotos.Data.Repositories
         {
         }
 
-        public async Task<bool> AddTagAsync(Tag tag)
+        public async Task<int> AddTagAsync(Tag tag)
         {
             await DbContext!.Tags.AddAsync(tag);
             int resultCount = await SaveChangesAsync();
 
-            return resultCount == 1;
+            // return resultCount == 1;
+            return tag.Id;
         }
 
         public async Task<bool> DeleteTagAsync(Tag tag)
@@ -48,6 +49,12 @@ namespace StockMePhotos.Data.Repositories
         {
             return await DbContext!.Tags
                 .FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        public async Task<Tag?> GetTagBySlugAsync(string slug)
+        {
+            return await DbContext!.Tags
+                .FirstOrDefaultAsync(t => t.Slug == slug);
         }
 
         public async Task<bool> TagWithSlugExistsAsync(string slug)

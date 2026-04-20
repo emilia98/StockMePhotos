@@ -441,3 +441,8 @@ h1.page-title {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+.text-explain {
+    font-size: .875rem;
+    color: gray;
+}

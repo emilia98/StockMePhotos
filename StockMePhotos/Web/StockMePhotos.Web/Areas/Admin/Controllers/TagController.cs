@@ -52,9 +52,9 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
                     return View(formModel);
                 }
 
-                bool hasSuccess = await tagService.CreateTagAsync(formModel, slug);
+                int tagId = await tagService.CreateTagAsync(formModel.Name, slug);
 
-                if (!hasSuccess)
+                if (tagId == 0)
                 {
                     ModelState.AddModelError(string.Empty, "Something happend! Couldn't create this tag!");
                     return View(formModel);

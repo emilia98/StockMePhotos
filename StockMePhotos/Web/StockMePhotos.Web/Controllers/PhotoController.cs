@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using StockMePhotos.GCommon;
 using StockMePhotos.Services.Common;
+using StockMePhotos.Services.Common.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Photo;
+using StockMePhotos.ViewModels.Tag;
 using System.Security.Claims;
 using static StockMePhotos.GCommon.ValidationMessages.Photo;
 
@@ -13,26 +15,34 @@ namespace StockMePhotos.Web.Controllers
     {
         private readonly IPhotoService photoService;
         private readonly ICategoryService categoryService;
+        private readonly ITagService tagService;
         private readonly IPhotoUploadService photoUploadService;
         private readonly IPhotoCategoryService photoCategoryService;
+        private readonly IPhotoTagService photoTagService;
         private readonly IFavoritePhotoService favoritePhotoService;
         private readonly CloudinaryService cloudinaryService;
-
+        private readonly ISlugGenerator slugGenerator;
 
         public PhotoController(
             IPhotoService photoService,
             ICategoryService categoryService,
+            ITagService tagService,
             IPhotoUploadService photoUploadService,
             IPhotoCategoryService photoCategoryService,
+            IPhotoTagService photoTagService,
             IFavoritePhotoService favoritePhotoService,
-            CloudinaryService cloudinaryService)
+            CloudinaryService cloudinaryService,
+            ISlugGenerator slugGenerator)
         {
             this.photoService = photoService;
             this.categoryService = categoryService;
+            this.tagService = tagService;
             this.photoUploadService = photoUploadService;
             this.photoCategoryService = photoCategoryService;
+            this.photoTagService = photoTagService;
             this.favoritePhotoService = favoritePhotoService;
             this.cloudinaryService = cloudinaryService;
+            this.slugGenerator = slugGenerator;
         }
 
         [AllowAnonymous]
@@ -98,12 +108,32 @@ namespace StockMePhotos.Web.Controllers
                 return View(inputModel);
             }
 
+
+
             try
             {
                 Guid photoId = await this.photoService.AddNewPhoto(inputModel, userId);
+                
                 await this.photoCategoryService.AddCategoryToPhotoAsync(photoId.ToString(), categoryId);
                 string uploadImageUrl = await this.cloudinaryService.UploadImageAsync(image!);
                 await this.photoUploadService.AddPhotoUploadAsync(photoId, uploadImageUrl);
+
+                IEnumerable<Tuple<string, string>> tags = ExtractTags(inputModel.Tags);
+                foreach (Tuple<string, string> tagData in tags)
+                {
+                    string tagName = tagData.Item1;
+                    string tagSlug = tagData.Item2;
+                    TagViewModel? tag = await tagService.GetTagBySlugAsync(tagSlug);
+                    int? tagId = tag?.Id;
+
+                    // If Tag exists
+                    if (tag == null)
+                    {
+                        tagId = await tagService.CreateTagAsync(tagName, tagSlug);
+                    }
+
+                    await photoTagService.AddTagToPhotoAsync(photoId.ToString(), tagId!.Value);
+                }
             }
             catch (Exception e)
             {
@@ -114,7 +144,6 @@ namespace StockMePhotos.Web.Controllers
             }
 
             return this.RedirectToAction(nameof(Index));
-
         }
 
         [HttpPost]
@@ -319,6 +348,25 @@ namespace StockMePhotos.Web.Controllers
             };
 
             return View(viewModel);
+        }
+
+        private ICollection<Tuple<string, string>> ExtractTags(string input)
+        {
+            string[] tagsInput = input.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            ICollection<Tuple<string, string>> tags = new List<Tuple<string, string>>();
+
+            foreach (var tag in tagsInput)
+            {
+                string tagName = tag.Trim();
+                string tagSlug = slugGenerator.GenerateSlug(tagName);
+
+                if (!string.IsNullOrEmpty(tagName) && !string.IsNullOrEmpty(tagSlug))
+                {
+                    tags.Add(new Tuple<string, string>(tagName, tagSlug));
+                }
+            }
+
+            return tags;
         }
     }
 }

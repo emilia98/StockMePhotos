@@ -15,11 +15,11 @@ namespace StockMePhotos.Services.Core
             this.tagRepository = tagRepository;
         }
 
-        public async Task<bool> CreateTagAsync(TagFormModel formModel, string slug)
+        public async Task<int> CreateTagAsync(string name, string slug)
         {
             Tag newTag = new Tag
             {
-                Name = formModel.Name,
+                Name = name,
                 Slug = slug
             };
 
@@ -107,6 +107,25 @@ namespace StockMePhotos.Services.Core
 
             tagToUpdate.Slug = slug;
             return await tagRepository.UpdateTagAsync(tagToUpdate);
+        }
+
+        public async Task<TagViewModel?> GetTagBySlugAsync(string slug)
+        {
+            Tag? tagFromDb = await tagRepository.GetTagBySlugAsync(slug);
+
+            if (tagFromDb == null)
+            {
+                return null;
+            }
+
+            TagViewModel tagViewModel = new TagViewModel
+            {
+                Id = tagFromDb.Id,
+                Name = tagFromDb.Name,
+                Slug = tagFromDb.Slug,
+            };
+
+            return tagViewModel;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Security.Claims;
 namespace StockMePhotos.Web.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public abstract class BaseController : Controller
     {
         public string? GetUserId()

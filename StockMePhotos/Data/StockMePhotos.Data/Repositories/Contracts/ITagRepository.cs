@@ -9,11 +9,13 @@ namespace StockMePhotos.Data.Repositories.Contracts
 
         Task<IEnumerable<Tag>> GetAllTagsAsync<TKey>(Expression<Func<Tag, TKey>> orderBy);
 
-        Task<bool> AddTagAsync(Tag tag);
+        Task<int> AddTagAsync(Tag tag);
 
         Task<bool> DeleteTagAsync(Tag tag);
 
         Task<Tag?> GetTagByIdAsync(int id);
+
+        Task<Tag?> GetTagBySlugAsync(string slug);
 
         Task<bool> TagWithSlugExistsAsync(string slug);
 

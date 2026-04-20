@@ -32,5 +32,8 @@ namespace StockMePhotos.ViewModels.Photo
 
         public IEnumerable<CategoryViewModel> Categories { get; set; }
             = new List<CategoryViewModel>();
+
+        [RegularExpression(@"^[a-zA-Z0-9&., ]*$", ErrorMessage = PhotoValidationMessages.TagsRules)]
+        public string Tags { get; set; } = string.Empty;
     }
 }
