@@ -35,9 +35,8 @@ namespace StockMePhotos.Data.Repositories
 
         public async Task<bool> RemoveCategoryFromPhotoAsync(IEnumerable<PhotoCategory> photoCategoriesToRemove)
         {
-            DbContext!.RemoveRange();
-            int resultCount = await DbContext!.SaveChangesAsync();
-
+            DbContext!.RemoveRange(photoCategoriesToRemove);
+            int resultCount = await SaveChangesAsync();
             return resultCount > 0;
         }
     }
