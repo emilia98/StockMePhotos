@@ -50,7 +50,7 @@ namespace StockMePhotos.Data.Repositories
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public async Task<bool> TagExistsAsync(string slug)
+        public async Task<bool> TagWithSlugExistsAsync(string slug)
         {
             return await DbContext!.Tags
                 .AnyAsync(t => t.Slug == slug);

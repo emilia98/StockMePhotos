@@ -13,8 +13,8 @@ namespace StockMePhotos.Data.Repositories.Contracts
 
         Task<bool> DeleteTagAsync(Tag tag);
 
-        Task<bool> TagExistsAsync(string slug);
-
         Task<Tag?> GetTagByIdAsync(int id);
+
+        Task<bool> TagWithSlugExistsAsync(string slug);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StockMePhotos.Services.Common.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Tag;
 
@@ -7,10 +8,13 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
     public class TagController : BaseAdminController
     {
         private readonly ITagService tagService;
+        private readonly ISlugGenerator slugGenerator;
 
-        public TagController(ITagService tagService)
+        public TagController(ITagService tagService,
+            ISlugGenerator slugGenerator)
         {
             this.tagService = tagService;
+            this.slugGenerator = slugGenerator;
         }
 
 
@@ -18,6 +22,51 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
         {
             IEnumerable<TagViewModel> tagsViewModel = await tagService.GetAllTagsOrderedById();
             return View(tagsViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            TagFormModel formModel = new TagFormModel();
+            return View(formModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(TagFormModel formModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(formModel);
+            }
+
+            string slug = slugGenerator.GenerateSlug(formModel.Name);
+
+            try
+            {
+                bool tagExists = await tagService.TagWithSlugExistsAsync(slug);
+
+                if (tagExists)
+                {
+                    ModelState.AddModelError(string.Empty, "This tag already exists!");
+                    return View(formModel);
+                }
+
+                bool hasSuccess = await tagService.CreateTagAsync(formModel, slug);
+
+                if (!hasSuccess)
+                {
+                    ModelState.AddModelError(string.Empty, "Something happend! Couldn't create this tag!");
+                    return View(formModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while adding a new tag!");
+                return View(formModel);
+            }
+
+            return RedirectToAction("Index", "Tag", new { area = "Admin" });
+
         }
     }
 }

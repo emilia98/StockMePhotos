@@ -1,0 +1,26 @@
+﻿@model TagFormModel
+@{
+    ViewData["Title"] = "Create new tag";
+}
+
+
+<div class="add-photo photo-input form-input page-content mt-5">
+    <h1 class="page-title">@ViewData["Title"]</h1>
+
+    <form class="mt-5" asp-area="Admin" asp-controller="Tag" asp-action="Create" method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="Name" class="form-control" />
+            <label asp-for="Name" class="form-label">Title</label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-buttons">
+            <button type="button" onclick="history.back();">Cancel</button>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
