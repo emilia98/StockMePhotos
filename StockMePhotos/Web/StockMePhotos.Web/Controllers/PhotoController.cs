@@ -108,8 +108,6 @@ namespace StockMePhotos.Web.Controllers
                 return View(inputModel);
             }
 
-
-
             try
             {
                 Guid photoId = await this.photoService.AddNewPhoto(inputModel, userId);
@@ -238,6 +236,42 @@ namespace StockMePhotos.Web.Controllers
                 {
                     await this.photoCategoryService.RemoveCategoryFromPhotoAsync(id);
                     await this.photoCategoryService.AddCategoryToPhotoAsync(id, newCategory);
+                }
+
+                IEnumerable<Tuple<string, string>> tags = ExtractTags(inputModel.Tags);
+                ICollection<int> previousTags = await photoTagService.GetAllTagsByPhotoAsync(id);
+                HashSet<int> usedTags = new HashSet<int>();
+                
+                foreach (Tuple<string, string> tagData in tags)
+                {
+                    string tagName = tagData.Item1;
+                    string tagSlug = tagData.Item2;
+                    TagViewModel? tag = await tagService.GetTagBySlugAsync(tagSlug);
+                    int? tagId = tag?.Id;
+                    // What happens to tag that has been assigned previously and now is not?
+
+                    if (tag == null)
+                    {
+                        tagId = await tagService.CreateTagAsync(tagName, tagSlug);
+                    }
+
+                    // prev | now
+                    // if the tag is assigned now and previously
+                    bool hasTagBeenAssigned = await photoTagService.HasTagBeenAssigned(tagId!.Value, id);
+
+                    if (!hasTagBeenAssigned)
+                    {
+                        await photoTagService.AddTagToPhotoAsync(id, tagId!.Value);
+                    }
+                    usedTags.Add(tagId!.Value);
+                }
+
+                foreach (var prevTagId in previousTags)
+                {
+                    if (!usedTags.Contains(prevTagId))
+                    {
+                        await photoTagService.RemoveTagFromPhotoAsync(id, prevTagId);
+                    }
                 }
 
                 bool updateSucess = await this.photoService.UpdatePhotoEntity(id, inputModel);

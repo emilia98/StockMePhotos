@@ -14,7 +14,7 @@ namespace StockMePhotos.Data.Repositories
         {
             return await DbContext!
                 .PhotosTags
-                .FirstOrDefaultAsync(pt => pt.PhotoId.ToString().ToLower() == photoId.ToLower());
+                .FirstOrDefaultAsync(pt => pt.PhotoId.ToString().ToLower() == photoId.ToLower() && pt.TagId == tagId);
         }
 
         public async Task<bool> AddTagToPhotoAsync(PhotoTag photoTag)

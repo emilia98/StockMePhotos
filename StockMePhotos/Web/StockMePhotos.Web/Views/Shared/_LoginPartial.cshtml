@@ -7,14 +7,17 @@
 <ul class="navbar-nav cm-navbar">
 @if (SignInManager.IsSignedIn(User))
 {
-        <li class="nav-item">
-            <a class="btn btn-primary btn-custom" asp-controller="Photo" asp-action="Add">Add Photo</a>
-        </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @UserManager.GetUserName(User)!
             </a>
             <ul class="dropdown-menu">
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="dropdown-item text-danger" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Area</a>
+                    </li>
+                }
                 <li>
                     <a id="manage" class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">My Profile</a>
                 </li>
@@ -34,7 +37,10 @@
                 </li>
             </ul>
         </li>
-}
+        <li class="nav-item">
+            <a class="btn btn-primary btn-custom" asp-controller="Photo" asp-action="Add">Add Photo</a>
+        </li>
+    }
 else
 {
     <li class="nav-item">

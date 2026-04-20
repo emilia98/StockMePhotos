@@ -30,6 +30,14 @@
             <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
 
         </div>
+        <div class="mb-3 description">
+
+            <label asp-for="Tags" class="form-label">Tags</label>
+            <textarea asp-for="Tags" class="form-control"></textarea>
+            <div class="text-explain">* Tags should be separated by comma.</div>
+            <span asp-validation-for="Tags" class="text-danger"></span>
+
+        </div>
         <div class="spacing mb-4 mt-4">
             <hr />
         </div>

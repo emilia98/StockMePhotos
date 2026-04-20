@@ -150,7 +150,8 @@ namespace StockMePhotos.Services.Core
                 Description = photoEntity.Description,
                 CategoryId = photoEntity.PhotoCategories.FirstOrDefault()!.CategoryId,
                 ImageURL = photoEntity.PhotoUpload.ImageURL,
-                UserId = photoEntity.UserId.ToString()
+                UserId = photoEntity.UserId.ToString(),
+                Tags = string.Join(", ", photoEntity.PhotoTags.Select(pt => pt.Tag.Name))
             };
 
             return inputModel;
@@ -235,6 +236,8 @@ namespace StockMePhotos.Services.Core
                 .Include(p => p.PhotoUpload)
                 .Include(p => p.User)
                 .Include(p => p.ToFavorites)
+                .Include(p => p.PhotoTags)
+                .ThenInclude(pt => pt.Tag)
                 .Include(p => p.PhotoCategories)
                 .ThenInclude(pc => pc.Category)
                 .FirstOrDefaultAsync(p => p.Id.ToString().ToLower() == id.ToLower() && p.IsDeleted == false);

@@ -42,5 +42,19 @@ namespace StockMePhotos.Services.Core
 
             return await photoTagRepository.RemoveTagFromPhotoAsync(photoTagToRemove);
         }
+
+        public async Task<bool> HasTagBeenAssigned(int tagId, string photoId)
+        {
+            return await photoTagRepository.TagAssignedToPhotoAsync(tagId, photoId);
+        }
+
+        public async Task<ICollection<int>> GetAllTagsByPhotoAsync(string photoId)
+        {
+            IEnumerable<PhotoTag> photoTags =  await photoTagRepository
+                .GetAllTagsAssignedToPhoto(photoId);
+            return photoTags
+                .Select(pt => pt.TagId)
+                .ToHashSet();
+        }
     }
 }

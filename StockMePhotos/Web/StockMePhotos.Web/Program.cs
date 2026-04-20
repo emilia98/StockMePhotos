@@ -10,7 +10,6 @@ using StockMePhotos.Services.AutoMapping;
 using StockMePhotos.Services.Common;
 using StockMePhotos.Services.Common.Contracts;
 using StockMePhotos.Services.Core;
-using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.Services.Models;
 using StockMePhotos.Web.Infrastructure;
 using StockMePhotos.Web.Models;
