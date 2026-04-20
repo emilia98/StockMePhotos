@@ -414,5 +414,30 @@ h1.dashboard {
     letter-spacing: 2px;
 }
 
+.table-custom {
+    color: var(--main-color);
+    /* text-align: center; */
+    --bs-table-bg: white;
+}
+
+.table-custom th {
+    font-weight: 400;
+    text-transform: uppercase;
+}
 
 /* ADMIN DASHBOARD */
+
+
+h1.page-title {
+    font-weight: 200;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+.tag-card h5 {
+    color: var(--main-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

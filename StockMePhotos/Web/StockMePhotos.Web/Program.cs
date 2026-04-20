@@ -8,6 +8,7 @@ using StockMePhotos.Data.Seeding.Contracts;
 using StockMePhotos.GCommon;
 using StockMePhotos.Services.AutoMapping;
 using StockMePhotos.Services.Common;
+using StockMePhotos.Services.Common.Contracts;
 using StockMePhotos.Services.Core;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.Services.Models;
@@ -62,6 +63,7 @@ namespace StockMePhotos.Web
             builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
             builder.Services.AddSingleton(AutoMapperConfig.MapperInstance);
+            builder.Services.AddSingleton<ISlugGenerator, SlugGenerator>();
 
             /* Cloudinary */
             builder.Services.Configure<CloudinarySettings>(
@@ -94,6 +96,9 @@ namespace StockMePhotos.Web
             app.MapControllerRoute(
                name: "adminArea",
                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+                name: "slugRoute",
+                pattern: "{controller=Home}/{action=Index}/{id:required}/{slug:required}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

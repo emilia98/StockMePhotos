@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TagViewModel>
+@{
+    ViewData["Title"] = "Manage Tags";
+}
+
+<div class="container py-5">
+    <div class="text-center">
+        <h1 class="display-4 mb-3 text-custom dashboard">Manage Tags</h1>
+        <a class="btn btn-primary btn-custom" asp-area="Admin" asp-controller="Tag" asp-action="Create">
+            <i class="bi bi-plus"></i>
+            New Tag
+        </a>
+    </div>
+
+    <div class="table-responsive mt-5">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-custom">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Photos</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        <td>@tag.Id</td>
+                        <td>@tag.Name</td>
+                        <td>@tag.Slug</td>
+                        <td>@tag.PhotosCount</td>
+                        <td class="text-center">
+                            <a asp-area="Admin" asp-controller="Tag" asp-action="Update" asp-route-id="@tag.Id" class="btn btn-sm btn-primary me-2">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

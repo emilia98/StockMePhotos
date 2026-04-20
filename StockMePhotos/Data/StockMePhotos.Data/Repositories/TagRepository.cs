@@ -50,10 +50,31 @@ namespace StockMePhotos.Data.Repositories
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public async Task<bool> TagExistsAsync(string slug)
+        public async Task<bool> TagWithSlugExistsAsync(string slug)
         {
             return await DbContext!.Tags
                 .AnyAsync(t => t.Slug == slug);
+        }
+
+        public async Task<bool> TagWithIdExistsAsync(int id)
+        {
+            return await DbContext!.Tags
+                .AnyAsync(t => t.Id == id);
+        }
+
+        public async Task<Tag?> TagWithSlugAsync(string slug)
+        {
+            return await DbContext!
+                .Tags
+                .FirstOrDefaultAsync(t => t.Slug == slug);
+        }
+
+        public async Task<bool> UpdateTagAsync(Tag updatedTag)
+        {
+            DbContext!.Update(updatedTag);
+            int resultCount = await SaveChangesAsync();
+
+            return resultCount == 1;
         }
     }
 }
