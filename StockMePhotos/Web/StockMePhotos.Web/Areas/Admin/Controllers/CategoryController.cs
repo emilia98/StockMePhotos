@@ -23,5 +23,50 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
             IEnumerable<CategoryViewModel> categoriesViewModel = await categoryService.GetAllCategoriesOrderedById();
             return View(categoriesViewModel);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            CategoryFormModel formModel = new CategoryFormModel();
+            return View(formModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryFormModel formModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(formModel);
+            }
+
+            string slug = slugGenerator.GenerateSlug(formModel.Name);
+
+            try
+            {
+                bool categoryExists = await categoryService.CategoryWithSlugExistsAsync(slug);
+
+                if (categoryExists)
+                {
+                    ModelState.AddModelError(string.Empty, "This tag already exists!");
+                    return View(formModel);
+                }
+
+                bool hasSuccess = await categoryService.CreateCategoryAsync(formModel, slug);
+
+                if (!hasSuccess)
+                {
+                    ModelState.AddModelError(string.Empty, "Something happend! Couldn't create this category!");
+                    return View(formModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while adding a new category!");
+                return View(formModel);
+            }
+
+            return RedirectToAction("Index", "Category", new { area = "Admin" });
+
+        }
     }
 }

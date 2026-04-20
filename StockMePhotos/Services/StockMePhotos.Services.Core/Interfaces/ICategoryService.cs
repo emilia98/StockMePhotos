@@ -1,4 +1,5 @@
-﻿using StockMePhotos.ViewModels.Category;
+﻿using StockMePhotos.Data.Repositories;
+using StockMePhotos.ViewModels.Category;
 
 namespace StockMePhotos.Services.Core.Interfaces
 {
@@ -9,5 +10,11 @@ namespace StockMePhotos.Services.Core.Interfaces
         public Task<IEnumerable<CategoryViewModel>> GetAllCategoriesOrderedById();
 
         public Task<IEnumerable<CategoryViewModel>> GetAllCategoriesOrderedByName();
+
+        public Task<bool> CategoryWithSlugExistsAsync(string slug);
+
+        public Task<bool> CategoryWithIdExistsAsync(int id);
+
+        public Task<bool> CreateCategoryAsync(CategoryFormModel formModel, string slug);
     }
 }
