@@ -65,7 +65,7 @@ Follow these steps to get the project running locally.
 
 ```bash
 git clone https://github.com/emilia98/StockMePhotos
-cd StockMePhotos
+cd StockMePhotos/StockMePhotos
 ```
 
 ### 2. Restore dependencies
