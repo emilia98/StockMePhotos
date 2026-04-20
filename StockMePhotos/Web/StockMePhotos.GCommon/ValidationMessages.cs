@@ -7,6 +7,10 @@
             public const string NameRequired = "Name is required.";
             public const string NameMinLength = "Name should be at least {0} characters long.";
             public const string NameMaxLength = "Name should have max length of {0} characters.";
+
+            public const string SlugRequired = "Slug is required.";
+            public const string SlugMinLength = "Slug should be at least {0} characters long.";
+            public const string SlugMaxLength = "Slug should have max length of {0} characters.";
         }
 
         public static class Category

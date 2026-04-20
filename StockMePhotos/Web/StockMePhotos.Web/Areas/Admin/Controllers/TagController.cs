@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StockMePhotos.GCommon.Exceptions;
 using StockMePhotos.Services.Common.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Tag;
@@ -67,6 +68,56 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Tag", new { area = "Admin" });
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update([FromRoute] int id)
+        {
+            UpdateTagFormModel? tagFormModel = await tagService.GetTagToUpdateByIdAsync(id);
+            if (tagFormModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(tagFormModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update([FromRoute] int id, UpdateTagFormModel tagFormModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(tagFormModel);
+            }
+
+            string generatedSlug = slugGenerator.ReGenerateSlug(tagFormModel.Slug);
+
+            try
+            {
+                bool hasSuccess = await tagService.UpdateTagAsync(id, generatedSlug);
+
+                if (!hasSuccess)
+                {
+                    ModelState.AddModelError(string.Empty, "Unexpeted error occurred while updating tag!");
+                    return View(tagFormModel);
+                }
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+            catch (EntityAlreadyExistsException e)
+            {
+                ModelState.AddModelError(string.Empty, "This tag slug has already been used!");
+                return View(tagFormModel);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpeted error occurred while updating tag!");
+                return View(tagFormModel);
+            }
+
+            return RedirectToAction("Index", "Tag", new { area = "Admin" });
         }
     }
 }

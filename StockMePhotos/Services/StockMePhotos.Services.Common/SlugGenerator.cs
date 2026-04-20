@@ -12,5 +12,14 @@ namespace StockMePhotos.Services.Common
 
             return string.Join("-", inputDataSplit);
         }
+
+        public string ReGenerateSlug(string input)
+        {
+            string[] inputDataSplit = input.Replace("-", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .Select(c => c.Trim().ToLowerInvariant())
+                .ToArray();
+
+            return string.Join("-", inputDataSplit);
+        }
     }
 }

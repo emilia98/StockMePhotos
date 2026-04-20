@@ -3,5 +3,7 @@
     public interface ISlugGenerator
     {
         string GenerateSlug(string input);
+
+        string ReGenerateSlug(string input);
     }
 }
