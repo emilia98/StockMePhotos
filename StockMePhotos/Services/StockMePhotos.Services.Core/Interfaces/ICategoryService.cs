@@ -16,5 +16,9 @@ namespace StockMePhotos.Services.Core.Interfaces
         public Task<bool> CategoryWithIdExistsAsync(int id);
 
         public Task<bool> CreateCategoryAsync(CategoryFormModel formModel, string slug);
+
+        public Task<UpdateCategoryFormModel?> GetCategoryToUpdateByIdAsync(int categoryId);
+
+        public Task<bool> UpdateCategoryAsync(int categoryId, string slug, string description);
     }
 }

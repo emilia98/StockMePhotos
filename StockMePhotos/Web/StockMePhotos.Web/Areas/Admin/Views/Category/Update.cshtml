@@ -1,0 +1,38 @@
+﻿@model UpdateCategoryFormModel
+@{
+    ViewData["Title"] = "Update Category";
+}
+
+<div class="add-photo photo-input form-input page-content mt-5">
+    <h1 class="page-title">@ViewData["Title"]</h1>
+
+    <form class="mt-5" asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-id="@Model.Id" method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-floating mb-3">
+            <input asp-for="Name" class="form-control" disabled />
+            <label asp-for="Name" class="form-label">Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Slug" class="form-control" />
+            <label asp-for="Slug" class="form-label">Slug</label>
+            <span asp-validation-for="Slug" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3 description">
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <label asp-for="Description" class="form-label">Description</label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="DateCreated" class="form-control" disabled />
+            <label asp-for="DateCreated" class="form-label">DateCreated</label>
+        </div>
+        <div class="form-buttons">
+            <button type="button" onclick="history.back();">Cancel</button>
+            <button type="submit">Update</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

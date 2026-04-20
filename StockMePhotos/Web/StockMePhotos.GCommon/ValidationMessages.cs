@@ -21,6 +21,10 @@
             public const string DescriptionRequired = "Description is required.";
             public const string DescriptionMinLength = "Description should be at least {1} characters long.";
             public const string DescriptionMaxLength = "Description should have max length of {1} characters.";
+
+            public const string SlugRequired = "Slug is required.";
+            public const string SlugMinLength = "Slug should be at least {1} characters long.";
+            public const string SlugMaxLength = "Slug should have max length of {1} characters.";
         }
 
         public static class Photo

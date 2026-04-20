@@ -1,6 +1,7 @@
 ﻿using StockMePhotos.Data.Models;
 using StockMePhotos.Data.Repositories;
 using StockMePhotos.Data.Repositories.Contracts;
+using StockMePhotos.GCommon.Exceptions;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Category;
 using StockMePhotos.ViewModels.Tag;
@@ -76,6 +77,55 @@ namespace StockMePhotos.Services.Core
         public async Task<bool> CategoryWithIdExistsAsync(int id)
         {
             return await categoryRepository.CategoryWithIdExists(id);
+        }
+
+        public async Task<UpdateCategoryFormModel?> GetCategoryToUpdateByIdAsync(int categoryId)
+        {
+            Category? categoryFromDb = await categoryRepository.GetCategoryByIdAsync(categoryId);
+
+            if (categoryFromDb == null)
+            {
+                return null;
+            }
+
+            UpdateCategoryFormModel updateCategoryFormModel = new UpdateCategoryFormModel
+            {
+                Id = categoryFromDb.Id,
+                Name = categoryFromDb.Name,
+                Slug = categoryFromDb.Slug,
+                Description = categoryFromDb.Description,
+                DateCreated = categoryFromDb.DateAdded.ToString()
+            };
+
+            return updateCategoryFormModel;
+
+        }
+        public async Task<bool> UpdateCategoryAsync(int categoryId, string slug, string description)
+        {
+            Category? categoryToUpdate = await categoryRepository.GetCategoryByIdAsync(categoryId);
+
+            if (categoryToUpdate == null)
+            {
+                throw new EntityNotFoundException();
+            }
+
+            Category? categoryWithSlug = await categoryRepository.CategoryWithSlug(slug);
+
+            if (categoryWithSlug != null && categoryWithSlug.Id != categoryId)
+            {
+                throw new EntityAlreadyExistsException();
+            }
+
+            /*
+            if (categoryToUpdate.Slug == slug)
+            {
+                return true;
+            }
+            */
+            categoryToUpdate.Slug = slug;
+            categoryToUpdate.Description = description;
+
+            return await categoryRepository.UpdateCategoryAsync(categoryToUpdate);
         }
     }
 }

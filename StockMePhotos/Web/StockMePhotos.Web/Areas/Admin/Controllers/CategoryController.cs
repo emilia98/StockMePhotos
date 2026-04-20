@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StockMePhotos.GCommon.Exceptions;
 using StockMePhotos.Services.Common.Contracts;
+using StockMePhotos.Services.Core;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Category;
+using StockMePhotos.ViewModels.Tag;
 
 namespace StockMePhotos.Web.Areas.Admin.Controllers
 {
@@ -66,7 +69,56 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index", "Category", new { area = "Admin" });
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> Update([FromRoute] int id)
+        {
+            UpdateCategoryFormModel? categoryFormModel = await categoryService.GetCategoryToUpdateByIdAsync(id);
+            if (categoryFormModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFormModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update([FromRoute] int id, UpdateCategoryFormModel categoryFormModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(categoryFormModel);
+            }
+
+            string generatedSlug = slugGenerator.ReGenerateSlug(categoryFormModel.Slug);
+
+            try
+            {
+                bool hasSuccess = await categoryService.UpdateCategoryAsync(id, generatedSlug, categoryFormModel.Description);
+
+                if (!hasSuccess)
+                {
+                    ModelState.AddModelError(string.Empty, "Unexpected error occurred while updating category!");
+                    return View(categoryFormModel);
+                }
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+            catch (EntityAlreadyExistsException e)
+            {
+                ModelState.AddModelError(string.Empty, "This tag slug has already been used!");
+                return View(categoryFormModel);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, "Unexpected error occurred while updating category!");
+                return View(categoryFormModel);
+            }
+
+            return RedirectToAction("Index", "Category", new { area = "Admin" });
         }
     }
 }
