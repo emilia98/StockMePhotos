@@ -71,7 +71,7 @@ namespace StockMePhotos.Data.Repositories
 
         public async Task<bool> UpdateTagAsync(Tag updatedTag)
         {
-            DbContext!.Update(updatedTag);
+            DbContext!.Tags.Update(updatedTag);
             int resultCount = await SaveChangesAsync();
 
             return resultCount == 1;
