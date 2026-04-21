@@ -56,5 +56,14 @@ namespace StockMePhotos.Services.Core
                 .Select(pt => pt.TagId)
                 .ToHashSet();
         }
+
+        public async Task<IEnumerable<Guid>> GetAllPhotosWithTagAssigned(int tagId)
+        {
+            IEnumerable<PhotoTag> photoTags = await photoTagRepository
+                .GetAllPhotosWithAssignedTag(tagId);
+            return photoTags
+                .Select(pt => pt.PhotoId)
+                .ToHashSet();
+        }
     }
 }

@@ -9,12 +9,15 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
     public class TagController : BaseAdminController
     {
         private readonly ITagService tagService;
+        private readonly IPhotoTagService photoTagService;
         private readonly ISlugGenerator slugGenerator;
 
         public TagController(ITagService tagService,
+            IPhotoTagService photoTagService,
             ISlugGenerator slugGenerator)
         {
             this.tagService = tagService;
+            this.photoTagService = photoTagService;
             this.slugGenerator = slugGenerator;
         }
 
@@ -115,6 +118,39 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Unexpeted error occurred while updating tag!");
                 return View(tagFormModel);
+            }
+
+            return RedirectToAction("Index", "Tag", new { area = "Admin" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool tagExists = await tagService.TagWithIdExistsAsync(id);
+
+            if (!tagExists)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<Guid> photosWithTagAssigned = await photoTagService.GetAllPhotosWithTagAssigned(id);
+
+            try
+            {
+                foreach (Guid photo in photosWithTagAssigned)
+                {
+                    await photoTagService.RemoveTagFromPhotoAsync(photo.ToString(), id);
+                }
+
+                await tagService.RemoveTagAsync(id);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
 
             return RedirectToAction("Index", "Tag", new { area = "Admin" });

@@ -32,12 +32,14 @@
                         <td>@category.Slug</td>
                         <td>@category.PhotosCount</td>
                         <td class="text-center">
+                            <div class="category-actions">
                             <a asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-id="@category.Id" class="btn btn-sm btn-primary me-2">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <button class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash"></i>
                             </button>
+                            </div>
                         </td>
                     </tr>
                 }

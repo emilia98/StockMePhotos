@@ -19,5 +19,7 @@ namespace StockMePhotos.Services.Core.Interfaces
         Task<UpdateTagFormModel?> GetTagToUpdateByIdAsync(int tagId);
 
         Task<TagViewModel?> GetTagBySlugAsync(string slug);
+
+        Task<bool> RemoveTagAsync(int tagId);
     }
 }

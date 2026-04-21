@@ -32,12 +32,16 @@
                         <td>@tag.Slug</td>
                         <td>@tag.PhotosCount</td>
                         <td class="text-center">
-                            <a asp-area="Admin" asp-controller="Tag" asp-action="Update" asp-route-id="@tag.Id" class="btn btn-sm btn-primary me-2">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <div class="tag-actions">
+                                <a asp-area="Admin" asp-controller="Tag" asp-action="Update" asp-route-id="@tag.Id" class="btn btn-sm btn-primary me-2">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form asp-area="Admin" asp-controller="Tag" asp-action="Delete" asp-route-id="@tag.Id" method="post">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 }

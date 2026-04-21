@@ -446,3 +446,10 @@ h1.page-title {
     font-size: .875rem;
     color: gray;
 }
+
+div.tag-actions, div.category-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

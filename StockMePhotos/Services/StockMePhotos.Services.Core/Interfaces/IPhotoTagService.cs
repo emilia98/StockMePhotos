@@ -9,5 +9,7 @@
         public Task<bool> HasTagBeenAssigned(int tagId, string photoId);
 
         public Task<ICollection<int>> GetAllTagsByPhotoAsync(string photoId);
+
+        public Task<IEnumerable<Guid>> GetAllPhotosWithTagAssigned(int tagId);
     }
 }

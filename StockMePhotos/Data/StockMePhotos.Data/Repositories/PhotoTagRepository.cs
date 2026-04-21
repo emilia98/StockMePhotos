@@ -45,5 +45,13 @@ namespace StockMePhotos.Data.Repositories
             int resultCount = await SaveChangesAsync();
             return resultCount > 0;
         }
+
+        public async Task<IEnumerable<PhotoTag>> GetAllPhotosWithAssignedTag(int tagId)
+        {
+            return await DbContext!
+                .PhotosTags
+                .Where(pt => pt.TagId == tagId)
+                .ToListAsync();
+        }
     }
 }

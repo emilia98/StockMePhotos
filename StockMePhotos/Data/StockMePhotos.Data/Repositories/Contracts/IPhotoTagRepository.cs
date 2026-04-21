@@ -13,5 +13,7 @@ namespace StockMePhotos.Data.Repositories.Contracts
         public Task<bool> RemoveTagFromPhotoAsync(PhotoTag photoTagToRemove);
 
         public Task<PhotoTag?> GetPhotoTagByIds(string photoId, int tagId);
+
+        public Task<IEnumerable<PhotoTag>> GetAllPhotosWithAssignedTag(int tagId);
     }
 }

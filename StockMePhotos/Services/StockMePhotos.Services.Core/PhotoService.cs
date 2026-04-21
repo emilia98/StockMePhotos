@@ -149,7 +149,7 @@ namespace StockMePhotos.Services.Core
                 Title = photoEntity.Title,
                 Description = photoEntity.Description,
                 CategoryId = photoEntity.PhotoCategories.FirstOrDefault()!.CategoryId,
-                ImageURL = photoEntity.PhotoUpload.ImageURL,
+                ImageURL = photoEntity?.PhotoUpload.ImageURL ?? string.Empty,
                 UserId = photoEntity.UserId.ToString(),
                 Tags = string.Join(", ", photoEntity.PhotoTags.Select(pt => pt.Tag.Name))
             };

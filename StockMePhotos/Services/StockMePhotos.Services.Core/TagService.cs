@@ -127,5 +127,17 @@ namespace StockMePhotos.Services.Core
 
             return tagViewModel;
         }
+
+        public async Task<bool> RemoveTagAsync(int tagId)
+        {
+            Tag? tagFromDb = await tagRepository.GetTagByIdAsync(tagId);
+
+            if (tagFromDb == null)
+            {
+                throw new EntityNotFoundException();
+            }
+
+            return await tagRepository.DeleteTagAsync(tagFromDb);
+        }
     }
 }
