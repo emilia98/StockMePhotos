@@ -4,6 +4,7 @@ using StockMePhotos.Data.Models;
 using StockMePhotos.Services.Core.Interfaces;
 using StockMePhotos.ViewModels.Category;
 using StockMePhotos.ViewModels.Photo;
+using StockMePhotos.ViewModels.Tag;
 
 namespace StockMePhotos.Services.Core
 {
@@ -126,6 +127,11 @@ namespace StockMePhotos.Services.Core
                     Id = pc.CategoryId,
                     Name = pc.Category.Name,
                 }) ?? new List<CategoryViewModel>(),
+                Tags = photoEntity!.PhotoTags.Select(pt => new TagViewModel
+                {
+                    Id = pt.TagId,
+                    Name = pt.Tag.Name,
+                }) ?? new List<TagViewModel>(),
                 UserName = photoEntity.User?.UserName?.ToLower() ?? "default@user.com",
                 CreatorId = photoEntity.UserId.ToString(),
                 IsOwner = photoEntity.UserId.ToString().ToLower() == currentUserId?.ToLower(),

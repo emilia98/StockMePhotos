@@ -32,6 +32,16 @@
                     }
                 </div>
             </div>
+            <div class="tags">
+                <div class="d-label">Tags</div>
+                <div class="tags-list">
+
+                    @foreach (var t in Model.Tags)
+                    {
+                        <span class="sc" data-cat-id="@t.Id">@t.Name</span>
+                    }
+                </div>
+            </div>
             <div class="actions">
 
                 @if (Model.IsOwner)

@@ -1,4 +1,5 @@
 ﻿using StockMePhotos.ViewModels.Category;
+using StockMePhotos.ViewModels.Tag;
 
 namespace StockMePhotos.ViewModels.Photo
 {
@@ -23,5 +24,7 @@ namespace StockMePhotos.ViewModels.Photo
         public bool IsInFavoriteList { get; set; } = false;
 
         public IEnumerable<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
+
+        public IEnumerable<TagViewModel> Tags { get; set; } = new List<TagViewModel>();
     }
 }
