@@ -1,0 +1,26 @@
+﻿@model IEnumerable<TagViewModel>
+@{
+    ViewData["Title"] = "Tags";
+}
+
+<div class="container py-3">
+    <div class="text-center">
+        <h1 class="display-4 mb-3 text-custom page-title">Photo Tags</h1>
+    </div>
+
+    <div class="row g-3 mt-5">
+        @foreach (TagViewModel tag in Model)
+        {
+            <div class="col-6 col-md-4 col-lg-3">
+                <a asp-area="" asp-controller="Tag" asp-action="Details" asp-route-id="" class="text-decoration-none">
+                    <div class="card shadow-sm h-100 tag-card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-2">@tag.Name</h5>
+                            <p class="card-text text-muted mb-0">@tag.PhotosCount</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
