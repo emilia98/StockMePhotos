@@ -33,6 +33,14 @@ namespace StockMePhotos.Data.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<PhotoCategory>> GetAllPhotosWithAssignedCategory(int categoryId)
+        {
+            return await DbContext!
+                .PhotosCategories
+                .Where(pc => pc.CategoryId == categoryId)
+                .ToListAsync();
+        }
+
         public async Task<bool> RemoveCategoryFromPhotoAsync(IEnumerable<PhotoCategory> photoCategoriesToRemove)
         {
             DbContext!.RemoveRange(photoCategoriesToRemove);

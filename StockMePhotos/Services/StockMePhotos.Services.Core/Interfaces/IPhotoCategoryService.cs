@@ -5,5 +5,7 @@
         Task AddCategoryToPhotoAsync(string photoId, int categoryId);
 
         Task RemoveCategoryFromPhotoAsync(string photoId);
+
+        public Task<IEnumerable<Guid>> GetAllPhotosWithCategoryAssigned(int categoryId);
     }
 }

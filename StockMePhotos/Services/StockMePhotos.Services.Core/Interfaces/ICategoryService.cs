@@ -20,5 +20,7 @@ namespace StockMePhotos.Services.Core.Interfaces
         public Task<UpdateCategoryFormModel?> GetCategoryToUpdateByIdAsync(int categoryId);
 
         public Task<bool> UpdateCategoryAsync(int categoryId, string slug, string description);
+
+        Task<bool> RemoveCategoryAsync(int categoryId);
     }
 }

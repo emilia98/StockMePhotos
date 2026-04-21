@@ -127,5 +127,17 @@ namespace StockMePhotos.Services.Core
 
             return await categoryRepository.UpdateCategoryAsync(categoryToUpdate);
         }
+
+        public async Task<bool> RemoveCategoryAsync(int categoryId)
+        {
+            Category? categoryFromDb = await categoryRepository.GetCategoryByIdAsync(categoryId);
+
+            if (categoryFromDb == null)
+            {
+                throw new EntityNotFoundException();
+            }
+
+            return await categoryRepository.DeleteCategoryAsync(categoryFromDb);
+        }
     }
 }

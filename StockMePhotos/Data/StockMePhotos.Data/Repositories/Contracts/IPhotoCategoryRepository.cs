@@ -11,5 +11,7 @@ namespace StockMePhotos.Data.Repositories.Contracts
         public Task<bool> RemoveCategoryFromPhotoAsync(IEnumerable<PhotoCategory> photoCategoriesToRemove);
 
         public Task<IEnumerable<PhotoCategory>> GetAllCategoriesAssignedToPhoto(string photoId);
+
+        public Task<IEnumerable<PhotoCategory>> GetAllPhotosWithAssignedCategory(int categoryId);
     }
 }

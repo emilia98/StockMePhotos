@@ -11,12 +11,15 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
     public class CategoryController : BaseAdminController
     {
         private readonly ICategoryService categoryService;
+        private readonly IPhotoCategoryService photoCategoryService;
         private readonly ISlugGenerator slugGenerator;
 
         public CategoryController(ICategoryService categoryService,
+            IPhotoCategoryService photoCategoryService,
             ISlugGenerator slugGenerator)
         {
             this.categoryService = categoryService;
+            this.photoCategoryService = photoCategoryService;
             this.slugGenerator = slugGenerator;
         }
 
@@ -116,6 +119,39 @@ namespace StockMePhotos.Web.Areas.Admin.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Unexpected error occurred while updating category!");
                 return View(categoryFormModel);
+            }
+
+            return RedirectToAction("Index", "Category", new { area = "Admin" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool categoryExists = await categoryService.CategoryWithIdExistsAsync(id);
+
+            if (!categoryExists)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<Guid> photosWithCategoriesAssigned = await photoCategoryService.GetAllPhotosWithCategoryAssigned(id);
+
+            try
+            {
+                foreach (Guid photo in photosWithCategoriesAssigned)
+                {
+                    await photoCategoryService.RemoveCategoryFromPhotoAsync(photo.ToString());
+                }
+
+                await categoryService.RemoveCategoryAsync(id);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
 
             return RedirectToAction("Index", "Category", new { area = "Admin" });

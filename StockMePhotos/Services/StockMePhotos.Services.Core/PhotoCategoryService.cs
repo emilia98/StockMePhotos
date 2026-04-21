@@ -1,4 +1,5 @@
 ﻿using StockMePhotos.Data.Models;
+using StockMePhotos.Data.Repositories;
 using StockMePhotos.Data.Repositories.Contracts;
 using StockMePhotos.Services.Core.Interfaces;
 
@@ -26,6 +27,15 @@ namespace StockMePhotos.Services.Core
             };
 
             await photoCategoryRepository.AddCategoryToPhotoAsync(newPhotoCategory);
+        }
+
+        public async Task<IEnumerable<Guid>> GetAllPhotosWithCategoryAssigned(int categoryId)
+        {
+            IEnumerable<PhotoCategory> photoCategories = await photoCategoryRepository
+                .GetAllPhotosWithAssignedCategory(categoryId);
+            return photoCategories
+                .Select(pc => pc.PhotoId)
+                .ToHashSet();
         }
 
         public async Task RemoveCategoryFromPhotoAsync(string photoId)
