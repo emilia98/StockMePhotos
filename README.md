@@ -133,14 +133,17 @@ Describe how to use the main features of the app after launching it. Add screens
 7. You can use the 'Favorites' to see all the photos, added to Favorites Collection.
 8. You can add photo to 'Favorites', as a logged-in user.
 9. You can remove photo from 'Favorites', as a logged-in user.
+10. Admin can Add/Update/Delete Tags.
+11. Admin can Add/Update/Delete Categories.
 ```
 * Credentials for already seeded users:
 
 | Username | Password |
 | -------- | ------ |
-| user1@example.com | user1.1234 |
-| emilia@example.com | emilia.1234 |
-| WhaTheFuck@example.com | WhaTheFuck.1234 |
+| admin | admin.123 | -> ADMIN USER
+| user1 | user1.12345 |
+| emilia | emilia.12345 |
+| WhaTheFuck | WhaTheFuck.12345 |
 
 
 > 💡 **Tip:** You can add screenshots using: `![Screenshot](docs/screenshot.png)`
